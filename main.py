@@ -79,46 +79,53 @@ def renderInv(inv):
 				img4_rect = img4.get_rect(topleft=(x,y))
 				surfInv.blit(img4,img4_rect)
 				x+=STEP
-		x=0
-		y+=STEP
+		x = 0
+		y += STEP
 	sc.blit(surfInv,(GAME_HEIGHT,0))
 		
 def openInv():
 	
-	inv[len(inv)-2][len(inv)] = inv[1][1]
+	invcell = inv[1][1]
 	inv[1][1] = '4'
+	a = 1
+	b = 1
 	renderInv(inv)
 	while True:
 		for i in pygame.event.get():
 			if i.type == pygame.QUIT:
 				exit()
-			
 			elif i.type == pygame.KEYDOWN:
 				if i.key == pygame.K_i:
 					#surfGameDark.set_alpha(0)
+					inv[a][b] = invcell
+					renderInv(inv)
+					invcell = '0'
 					return
 				elif i.key == pygame.K_e:
-					inv[len(inv)-2][len(inv)] = '1'
+					invcell = '1'
 				elif i.key == pygame.K_1:
 					exit()
 				if i.key == pygame.K_UP:
-					moveInv(-1,0,inv)
+					invcell = moveInv(-1,0,inv,invcell)
+					a -= 1
 				elif i.key == pygame.K_RIGHT:
-					moveInv(0,1,inv)
+					invcell = moveInv(0,1,inv,invcell)
+					b += 1
 				elif i.key == pygame.K_DOWN:
-					moveInv(1,0,inv)
+					invcell = moveInv(1,0,inv,invcell)
+					a += 1
 				elif i.key == pygame.K_LEFT:
-					moveInv(0,-1,inv)
+					invcell = moveInv(0,-1,inv,invcell)
+					b -= 1
 				else:
 					print('ERROR KEY')
-
 		renderInv(inv)
 		pygame.display.update()
 
 
-def moveInv(dx,dy,inv):
-	x=0
-	y=0
+def moveInv(dx,dy,inv,invcell):
+	x = 0
+	y = 0
 	for i in range(0,len(inv)):
 		for j in range(0,len(inv[i])):
 			if (inv[i][j]=='4'):
@@ -128,9 +135,10 @@ def moveInv(dx,dy,inv):
 	if inv[x+dx][y+dy] == '0':
 		pass
 	else:
-		inv[x][y] = inv[len(inv)-2][len(inv)]
-		inv[len(inv)-2][len(inv)] = inv[x+dx][y+dy]
+		inv[x][y] = invcell
+		invcell = inv[x+dx][y+dy]
 		inv[x+dx][y+dy] = '4'
+	return invcell
 
 # если надо до цикла отобразить объекты на экране
 level = 1
@@ -170,7 +178,6 @@ while True:
 				renderMap(maps,player,surfGameDark,surfGameLight,sc,STEP)
 			elif i.key == pygame.K_i:
 				openInv()
-				#
 			else:
 				print('ERROR KEY')
 
