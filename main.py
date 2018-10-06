@@ -1,10 +1,15 @@
 # здесь подключаются модули
 import pygame
+import logSystem
+import random
 from renderGame import *
+
 # здесь определяются константы, классы и функции
 FPS = 60
 STEP = 64
-player = {'i':0,'j':0,'hp':3}
+
+player = {'level': 1, 'type': random.randint(1,4), 'i':0, 'j':0, 'hp':3}
+
 WINDOW_HEIGHT = 1024
 WINDOW_WEIGHT = 800
 
@@ -13,7 +18,6 @@ GAME_WEIGHT = 576
 
 INV_HEIGHT = WINDOW_HEIGHT - GAME_HEIGHT
 INV_WEIGHT = GAME_WEIGHT
-
 
 # здесь происходит инициация, создание объектов и др.
 pygame.init()
@@ -124,10 +128,11 @@ def moveInv(dx,dy,inv):
 
 # если надо до цикла отобразить объекты на экране
 
-maps = loadMap(level)
+maps = loadMap(player['level'])
 
 inv = loadInv()
 renderMap(maps,player,sc)
+logSystem.scanLog(maps,player,sc)
 renderInv(inv)
 pygame.display.update()
  
@@ -145,24 +150,23 @@ while True:
 			if i.key == pygame.K_UP:
 				tmp = maps
 				maps = renderList(-1,0,level,tmp,player)
-				renderMap(maps,player,sc)
 			elif i.key == pygame.K_RIGHT:
 				tmp = maps
 				maps = renderList(0,1,level,tmp,player)
-				renderMap(maps,player,sc)
 			elif i.key == pygame.K_DOWN:
 				tmp = maps
 				maps = renderList(1,0,level,tmp,player)
-				renderMap(maps,player,sc)
 			elif i.key == pygame.K_LEFT:
 				tmp = maps
 				maps = renderList(0,-1,level,tmp,player)
-				renderMap(maps,player,sc)
 			elif i.key == pygame.K_i:
 				openInv()
 				#
 			else:
 				print('ERROR KEY')
+
+	renderMap(maps,player,sc)
+	logSystem.scanLog(maps,player,sc)
 
 	# обновление экрана
 	pygame.display.update()
