@@ -129,11 +129,19 @@ def moveInv(dx,dy,inv):
 # если надо до цикла отобразить объекты на экране
 
 maps = loadMap(player['level'])
+randPlitka = []
+for i in range(0,len(maps)):
+	for j in range(0,len(maps[i])):
+		if maps[i][j] == '0':
+			typeOfPlitka = random.randint(1,3)
+			randPlitka.append(typeOfPlitka)
+print('plitka=',randPlitka)
+renderMap(maps,player,randPlitka,sc)
+logSystem.scanLog(maps,player,sc)
 
 inv = loadInv()
-renderMap(maps,player,sc)
-logSystem.scanLog(maps,player,sc)
 renderInv(inv)
+
 pygame.display.update()
  
 # главный цикл
@@ -165,7 +173,7 @@ while True:
 			else:
 				print('ERROR KEY')
 
-	renderMap(maps,player,sc)
+	renderMap(maps,player,randPlitka,sc)
 	logSystem.scanLog(maps,player,sc)
 
 	# обновление экрана

@@ -15,6 +15,7 @@ INV_WEIGHT = GAME_WEIGHT
 level = 1
 
 surfGameDark = pygame.Surface((GAME_HEIGHT,GAME_WEIGHT))
+surfGame = pygame.Surface((GAME_HEIGHT,GAME_WEIGHT))
 
 surfGameLight = pygame.Surface((GAME_HEIGHT-4*STEP,GAME_HEIGHT-4*STEP))
 
@@ -38,13 +39,14 @@ def loadMap(level):
 	
 	return m
 
-def renderMap(maps,player,sc):
+def renderMap(maps,player,randPlitka,sc):
 	dictEnv = {	0: 'srcBMP/env',
 				1: 'srcBMP/env',
 				2: 'srcBMP/player/'+str(player['type'])+'.bmp',
 				3: 'srcBMP/env/light/ladder.bmp',
 				4: 'srcBMP/env/light/chest.bmp'
-}
+			}
+			
 	for i in range(0,len(maps)):
 		for j in range(0,len(maps[i])):
 			if maps[i][j] == '2':
@@ -55,19 +57,19 @@ def renderMap(maps,player,sc):
 	startJ = player['j'] - 4
 	x=0
 	y=0
-	
+	r=0	
 	for i in range(startI,startI+10):
 		for j in range(startJ,startJ+10):
 			if maps[i][j]=='0':
-				typeOfPlitka = random.randint(1,3)
-				if typeOfPlitka == 1:
+				if randPlitka[r] == 1:
 					img0=pygame.image.load(dictEnv[0]+'/dark/plitka.bmp')
-				elif typeOfPlitka == 2:
+				elif randPlitka[r] == 2:
 					img0=pygame.image.load(dictEnv[0]+'/dark/grass_plitka.bmp')
-				elif typeOfPlitka == 3:
+				elif randPlitka[r] == 3:
 					img0=pygame.image.load(dictEnv[0]+'/dark/pobitaya_plitka.bmp')
 				img0_rect=img0.get_rect(topleft=(x,y))
 				surfGameDark.blit(img0,img0_rect)
+				r+=1
 				x+=STEP
 			elif maps[i][j]=='1':
 				img1=pygame.image.load(dictEnv[1]+'/dark/tipo_stena.bmp')
@@ -76,26 +78,27 @@ def renderMap(maps,player,sc):
 				x+=STEP
 		x=0
 		y+=STEP
-		
+
 	sc.blit(surfGameDark,(0,0))
 
 	startI = player['i'] - 2
 	startJ = player['j'] - 2
 	x=0
 	y=0
+	r=0
 	for i in range(startI,startI+5):
 		for j in range(startJ,startJ+5):
 			if (i!=0 and j!=0) or (i!=0 and j!=startJ+4) or (i!=startI+4 and j!=0) or (i!=startI+4 and j!=startJ+4):
 				if maps[i][j]=='0':
-					typeOfPlitka = random.randint(1,3)
-					if typeOfPlitka == 1:
+					if randPlitka[r] == 1:
 						img0=pygame.image.load(dictEnv[0]+'/light/plitka.bmp')
-					elif typeOfPlitka == 2:
+					elif randPlitka[r] == 2:
 						img0=pygame.image.load(dictEnv[0]+'/light/grass_plitka.bmp')
-					elif typeOfPlitka == 3:
+					elif randPlitka[r] == 3:
 						img0=pygame.image.load(dictEnv[0]+'/light/pobitaya_plitka.bmp')
 					img0_rect=img0.get_rect(topleft=(x,y))
 					surfGameLight.blit(img0,img0_rect)
+					r+=1
 					x+=STEP
 				elif maps[i][j]=='1':
 					img1=pygame.image.load(dictEnv[1]+'/light/tipo_stena.bmp')
