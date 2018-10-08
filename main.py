@@ -41,7 +41,8 @@ renderMap(maps,player,randPlitka,sc)
 logSystem.scanLog(maps,player,sc)
 
 inv = loadInv()
-renderInv(inv,sc)
+surfSelect.set_alpha(0)
+renderInv(inv,surfSelect,0,0,sc)
 
 pygame.display.update()
  
@@ -69,7 +70,7 @@ while True:
 				tmp = maps
 				maps = renderList(0,-1,level,tmp,player)
 			elif i.key == pygame.K_i:
-				openInv(inv,sc)
+				openInv(inv,maps,player,randPlitka,sc)
 			else:
 				print('ERROR KEY')
 

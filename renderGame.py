@@ -140,7 +140,7 @@ def renderMap(maps,player,randPlitka,sc):
 	
 	
 	hp=[]
-	if player['hp'] == 6: 
+	if player['hp'] >= 6: 
 		hp=[2,2,2]
 	elif player['hp'] == 5: 
 		hp=[2,2,1]
@@ -164,38 +164,47 @@ def renderMap(maps,player,randPlitka,sc):
 		x+=STEP
 	#sc.blit(surfHp,(0,GAME_WEIGHT))
 
-def renderInv(inv,sc):
+def renderInv(inv,surfSelect,a,b,sc):
 	x = 0
 	y = 0
 	for i in range(0,len(inv)):
 		for j in range(0,len(inv[i])):
 			if inv[i][j]=='0':
-				img0 = pygame.image.load('srcBMP/inv/border.bmp')
+				img0 = pygame.image.load('srcBMP/inv/invbg.bmp')
 				img0_rect = img0.get_rect(topleft=(x,y))
 				surfInv.blit(img0,img0_rect)
 				x+=STEP
 			elif inv[i][j]=='1':
-				img1 = pygame.image.load('srcBMP/inv/empty.bmp')
+				img1 = pygame.image.load('srcBMP/inv/invempty.bmp')
 				img1_rect = img1.get_rect(topleft=(x,y))
 				surfInv.blit(img1,img1_rect)
 				x+=STEP
 			elif inv[i][j]=='2':
-				img2 = pygame.image.load('srcBMP/inv/torch.bmp')
+				img2 = pygame.image.load('srcBMP/inv/statbg.bmp')
 				img2_rect = img2.get_rect(topleft=(x,y))
 				surfInv.blit(img2,img2_rect)
 				x+=STEP
 			elif inv[i][j]=='3':
-				img3 = pygame.image.load('srcBMP/inv/potion.bmp')
+				img3 = pygame.image.load('srcBMP/inv/invsword.bmp')
 				img3_rect = img3.get_rect(topleft=(x,y))
 				surfInv.blit(img3,img3_rect)
 				x+=STEP
 			elif inv[i][j]=='4':
-				img4 = pygame.image.load('srcBMP/inv/selector.bmp')
+				img4 = pygame.image.load('srcBMP/inv/invtorch.bmp')
 				img4_rect = img4.get_rect(topleft=(x,y))
 				surfInv.blit(img4,img4_rect)
 				x+=STEP
+			elif inv[i][j]=='5':
+				img5 = pygame.image.load('srcBMP/inv/invpotion.bmp')
+				img5_rect = img5.get_rect(topleft=(x,y))
+				surfInv.blit(img5,img5_rect)
+				x+=STEP
 		x = 0
 		y += STEP
+	imgS = pygame.image.load('srcBMP/inv/invsel.bmp')
+	imgS_rect = imgS.get_rect(topleft=(a*STEP,b*STEP))
+	surfSelect.blit(imgS,imgS_rect)
+	surfInv.blit(surfSelect,(b*STEP,a*STEP))
 	sc.blit(surfInv,(GAME_HEIGHT,0))
 
 def renderList(dx,dy,level,tmp,player):
