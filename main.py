@@ -2,14 +2,14 @@
 import pygame
 import logSystem
 import random
-from renderGame import *
-from invControl import *
+from renderGameTest import *
+from renderInv import *
 
 # здесь определяются константы, классы и функции
 FPS = 60
 STEP = 64
 
-player = {'level': 1, 'type': random.randint(1,4), 'i':0, 'j':0, 'hp':3}
+player = {'level': 1, 'type': random.randint(1,4), 'i':0, 'j':0, 'hp':5}
 
 WINDOW_HEIGHT = 1024
 WINDOW_WEIGHT = 800
@@ -36,6 +36,7 @@ for i in range(0,len(maps)):
 		if maps[i][j] == '0':
 			typeOfPlitka = random.randint(1,3)
 			randPlitka.append(typeOfPlitka)
+
 print('plitka=',randPlitka)
 renderMap(maps,player,randPlitka,sc)
 logSystem.scanLog(maps,player,sc)
