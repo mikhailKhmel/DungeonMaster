@@ -89,6 +89,8 @@ def openInv(inv,maps,player,randPlitka,sc):
 				elif i.key == pygame.K_e:
 					if inv[a][b] == '5':
 						player['hp'] +=2
+						if player['hp'] > 6:
+							player['hp'] = 6
 						inv[a][b] = '1'
 				elif i.key == pygame.K_q:
 					inv[a][b] = '1'
