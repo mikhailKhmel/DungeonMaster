@@ -113,7 +113,7 @@ def renderMap(maps,player,randPlitka,sc):
 
 	
 	hp=[]
-	if player['hp'] == 6: 
+	if player['hp'] >= 6: 
 		hp=[2,2,2]
 	elif player['hp'] == 5: 
 		hp=[2,2,1]
