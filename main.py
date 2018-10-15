@@ -9,7 +9,7 @@ from renderInv import *
 FPS = 60
 STEP = 64
 
-player = {'level': 1, 'type': random.randint(1,4), 'i':0, 'j':0, 'hp':5}
+player = {'level': 1, 'type': random.randint(1,4), 'i':0, 'j':0, 'hp':5, 'arm':0}
 
 WINDOW_HEIGHT = 1024
 WINDOW_WEIGHT = 800
@@ -41,7 +41,7 @@ print('plitka=',randPlitka)
 renderMap(maps,player,randPlitka,sc)
 logSystem.scanLog(maps,player,sc)
 
-inv = loadInv()
+inv = loadInv(player)
 surfSelect.set_alpha(0)
 renderInv(inv,surfSelect,0,0,sc)
 
