@@ -15,7 +15,7 @@ INV_WEIGHT = GAME_WEIGHT
 surfInv = pygame.Surface((INV_HEIGHT,INV_WEIGHT))
 surfSelect = pygame.Surface((STEP,STEP))
 
-def loadInv():
+def loadInv(player):
 	f = open('inv.txt', 'r')
 	s = f.read()
 	m = []
@@ -26,7 +26,15 @@ def loadInv():
 			tmp = []
 		else:
 			tmp.append(s[x])
-	print(m)
+	if player['type'] == 1:
+		m[1][1] = 'd'
+	elif player['type'] == 2:
+		m[1][1] = 'f'
+	elif player['type'] == 3:
+		m[1][1] = 'e'
+	elif player['type'] == 4:
+		m[1][1] = 'g'
+#	print(m)
 	return m
 
 def renderInv(inv,surfSelect,a,b,sc):
@@ -49,20 +57,50 @@ def renderInv(inv,surfSelect,a,b,sc):
 				img2_rect = img2.get_rect(topleft=(x,y))
 				surfInv.blit(img2,img2_rect)
 				x+=STEP
-			elif inv[i][j]=='3':
-				img3 = pygame.image.load('srcBMP/inv/invsword.bmp')
-				img3_rect = img3.get_rect(topleft=(x,y))
-				surfInv.blit(img3,img3_rect)
+			elif inv[i][j]=='a':
+				imga = pygame.image.load('srcBMP/inv/invpotion.bmp')
+				imga_rect = imga.get_rect(topleft=(x,y))
+				surfInv.blit(imga,imga_rect)
 				x+=STEP
-			elif inv[i][j]=='4':
-				img4 = pygame.image.load('srcBMP/inv/invtorch.bmp')
-				img4_rect = img4.get_rect(topleft=(x,y))
-				surfInv.blit(img4,img4_rect)
+			elif inv[i][j]=='d':
+				imgd = pygame.image.load('srcBMP/inv/invsword.bmp')
+				imgd_rect = imgd.get_rect(topleft=(x,y))
+				surfInv.blit(imgd,imgd_rect)
 				x+=STEP
-			elif inv[i][j]=='5':
-				img5 = pygame.image.load('srcBMP/inv/invpotion.bmp')
-				img5_rect = img5.get_rect(topleft=(x,y))
-				surfInv.blit(img5,img5_rect)
+			elif inv[i][j]=='e':
+				imge = pygame.image.load('srcBMP/inv/invspear.bmp')
+				imge_rect = imge.get_rect(topleft=(x,y))
+				surfInv.blit(imge,imge_rect)
+				x+=STEP
+			elif inv[i][j]=='f':
+				imgf = pygame.image.load('srcBMP/inv/invbow.bmp')
+				imgf_rect = imgf.get_rect(topleft=(x,y))
+				surfInv.blit(imgf,imgf_rect)
+				x+=STEP
+			elif inv[i][j]=='g':
+				imgg = pygame.image.load('srcBMP/inv/invtorch.bmp')
+				imgg_rect = imgg.get_rect(topleft=(x,y))
+				surfInv.blit(imgg,imgg_rect)
+				x+=STEP
+			elif inv[i][j]=='h':
+				imgh = pygame.image.load('srcBMP/inv/invarmour0.bmp')
+				imgh_rect = imgh.get_rect(topleft=(x,y))
+				surfInv.blit(imgh,imgh_rect)
+				x+=STEP
+			elif inv[i][j]=='i':
+				imgi = pygame.image.load('srcBMP/inv/invarmour1.bmp')
+				imgi_rect = imgi.get_rect(topleft=(x,y))
+				surfInv.blit(imgi,imgi_rect)
+				x+=STEP
+			elif inv[i][j]=='j':
+				imgj = pygame.image.load('srcBMP/inv/invarmour2.bmp')
+				imgj_rect = imgj.get_rect(topleft=(x,y))
+				surfInv.blit(imgj,imgj_rect)
+				x+=STEP
+			elif inv[i][j]=='k':
+				imgk = pygame.image.load('srcBMP/inv/invarmour3.bmp')
+				imgk_rect = imgk.get_rect(topleft=(x,y))
+				surfInv.blit(imgk,imgk_rect)
 				x+=STEP
 		x = 0
 		y += STEP
@@ -87,11 +125,45 @@ def openInv(inv,maps,player,randPlitka,sc):
 					renderInv(inv,surfSelect,a,b,sc)
 					return
 				elif i.key == pygame.K_e:
-					if inv[a][b] == '5':
+				#	Использование зелья
+					if inv[a][b] == 'a':
 						player['hp'] +=2
 						if player['hp'] > 6:
 							player['hp'] = 6
 						inv[a][b] = '1'
+				#	Замена экипировки
+					elif inv[a][b] == 'd':
+						inv[a][b] = inv[1][1]
+						inv[1][1] = 'd'
+						player['type'] = 1
+					elif inv[a][b] == 'e':
+						inv[a][b] = inv[1][1]
+						inv[1][1] = 'e'
+						player['type'] = 3
+					elif inv[a][b] == 'f':
+						inv[a][b] = inv[1][1]
+						inv[1][1] = 'f'
+						player['type'] = 2
+					elif inv[a][b] == 'g':
+						inv[a][b] = inv[1][1]
+						inv[1][1] = 'g'
+						player['type'] = 4
+				#	Замена брони
+					elif inv[a][b] == 'i':
+						if player['arm'] < 1:
+							inv[a][b] = inv[3][1]
+							inv[3][1] = 'i'
+							player['arm'] = 1
+					elif inv[a][b] == 'j':
+						if player['arm'] < 2:
+							inv[a][b] = inv[3][1]
+							inv[3][1] = 'j'
+							player['arm'] = 2
+					elif inv[a][b] == 'k':
+						if player['arm'] < 3:
+							inv[a][b] = inv[3][1]
+							inv[3][1] = 'k'
+							player['arm'] = 3
 				elif i.key == pygame.K_q:
 					inv[a][b] = '1'
 				elif i.key == pygame.K_UP:
