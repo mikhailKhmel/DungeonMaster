@@ -110,7 +110,7 @@ def renderInv(inv,surfSelect,a,b,sc):
 	surfInv.blit(surfSelect,(b*STEP,a*STEP))
 	sc.blit(surfInv,(GAME_HEIGHT,0))
 
-def openInv(inv,maps,player,randPlitka,sc):
+def openInv(inv,maps,player,sc):
 	a = 5
 	b = 1
 	surfSelect.set_alpha(127)
@@ -185,5 +185,5 @@ def openInv(inv,maps,player,randPlitka,sc):
 				else:
 					print('ERROR KEY')
 		renderInv(inv,surfSelect,a,b,sc)
-		renderMap(maps,player,randPlitka,sc)
+		renderMap(maps,player,sc)
 		pygame.display.update()
