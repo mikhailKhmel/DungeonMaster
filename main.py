@@ -6,7 +6,7 @@ from renderGameTest import *
 from renderInv import *
 
 # здесь определяются константы, классы и функции
-FPS = 30
+FPS = 15
 STEP = 64
 
 player = {'level': 1, 'type': random.randint(1,4), 'i':0, 'j':0, 'hp':5, 'arm':0}
