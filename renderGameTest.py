@@ -128,10 +128,7 @@ def renderMap(maps,player,sc):
 							img=pygame.image.load(dictEnv[4])
 							img_rect=img.get_rect(topleft=(x,y))
 							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='5':
-							img=pygame.image.load(dictEnv[4])
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
+						
 						elif maps[i][j]=='5':
 							img=pygame.image.load(dictEnv[5])
 							img_rect=img.get_rect(topleft=(x,y))
@@ -167,10 +164,7 @@ def renderMap(maps,player,sc):
 							img=pygame.image.load(dictEnv[4])
 							img_rect=img.get_rect(topleft=(x,y))
 							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='5':
-							img=pygame.image.load(dictEnv[4])
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
+						
 						elif maps[i][j]=='5':
 							img=pygame.image.load(dictEnv[5])
 							img_rect=img.get_rect(topleft=(x,y))
