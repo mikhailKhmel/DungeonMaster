@@ -1,9 +1,8 @@
 import pygame 
 import random
-from renderGameTest import *
-from config import *
+import config
 
-def mobMovement(tmp, enemy):
+def mobMovement(tmp):
 	x = 0
 	y = 0
 	dx = random.randint(-1,1)
@@ -23,20 +22,20 @@ def mobMovement(tmp, enemy):
 	elif tmp[x+dx][y+dy] == '3':
 		pass
 	elif tmp[x][y] == '5' and (tmp[x][y+1] == '2' or tmp[x+1][y] == '2' or tmp[x][y-1] == '2' or tmp[x-1][y] == '2'):
-		playerHp = player['hp'] - 1
-		player['hp'] = playerHp
+		playerHp = config.player['hp'] - 1
+		config.player['hp'] = playerHp
 	elif tmp[x+dx][y+dy] == '2':
 		pass
 	else:
 		tmp[x][y]='0'
 		tmp[x+dx][y+dy]='5'
-		enemy['i'] = x+dx
-		enemy['j'] = y+dy
+		config.enemy['i'] = x+dx
+		config.enemy['j'] = y+dy
 
 	return tmp		
 
 
-def mobKiller(tmp, enemy):
+def mobKiller(tmp):
 	xPl = 0
 	yPl = 0
 	for i in range(0, len(tmp)):
@@ -48,9 +47,9 @@ def mobKiller(tmp, enemy):
 				xMob = i
 				yMob = j
 	if tmp[xPl][yPl] == '2' and (tmp[xPl][yPl+1] == '5' or tmp[xPl+1][yPl] == '5' or tmp[xPl][yPl-1] == '5' or tmp[xPl-1][yPl] == '5'):
-		enemyHp = enemy['hp'] - 1
-		enemy['hp'] = enemyHp
-		if (enemy['hp'] == 0 and amount == 0):
+		enemyHp = config.enemy['hp'] - 1
+		config.enemy['hp'] = enemyHp
+		if config.enemy['hp'] == 0 and config.amount == 0:
 			if tmp[xPl][yPl+1] == '5':
 				tmp[xPl][yPl+1] = '0'
 			elif tmp[xPl+1][yPl] == '5':
@@ -59,11 +58,11 @@ def mobKiller(tmp, enemy):
 				tmp[xPl][yPl-1] = '0'
 			elif tmp[xPl-1][yPl] == '5':
 				tmp[xPl-1][yPl] = '0' 
-			amount = 1
-		elif (amount > 0):
-			enemy['hp'] = 2
-			amount = 0
+			config.amount = 1
+		elif config.amount > 0:
+			config.enemy['hp'] = 2
+			config.amount = 0
 
-	print(enemy['hp'])
+	print(config.enemy['hp'])
 
 	return tmp	

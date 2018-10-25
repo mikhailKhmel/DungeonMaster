@@ -55,30 +55,29 @@ while True:
 				tmp = maps
 				maps = renderList(-1,0,level,tmp)
 				tmp = maps
-				maps = mobMovement(tmp, enemy)
+				maps = mobMovement(tmp)
 				print(player['hp'])
 			elif i.key == pygame.K_RIGHT:
 				tmp = maps
 				maps = renderList(0,1,level,tmp)
 				tmp = maps
-				maps = mobMovement(tmp, enemy)
+				maps = mobMovement(tmp)
 				print(player['hp'])
 			elif i.key == pygame.K_DOWN:
 				tmp = maps
 				maps = renderList(1,0,level,tmp)
 				tmp = maps
-				maps = mobMovement(tmp, enemy)
+				maps = mobMovement(tmp)
 				print(player['hp'])
 			elif i.key == pygame.K_LEFT:
 				tmp = maps
 				maps = renderList(0,-1,level,tmp)
 				tmp = maps
-				maps = mobMovement(tmp, enemy)
+				maps = mobMovement(tmp)
 				print(player['hp'])
 			elif i.key == pygame.K_SPACE:
 				tmp = maps
-				tmp = mobKiller(tmp, enemy)
-				maps = tmp
+				maps = mobKiller(tmp)
 			elif i.key == pygame.K_i:
 				openInv(inv,maps,sc)
 			else:
