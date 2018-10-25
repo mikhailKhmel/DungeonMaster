@@ -1,5 +1,6 @@
 import pygame
 from renderGameTest import *
+from config import *
 
 STEP = 64
 
@@ -15,7 +16,7 @@ INV_WEIGHT = GAME_WEIGHT
 surfInv = pygame.Surface((INV_HEIGHT,INV_WEIGHT))
 surfSelect = pygame.Surface((STEP,STEP))
 
-def loadInv(player):
+def loadInv():
 	f = open('inv.txt', 'r')
 	s = f.read()
 	m = []

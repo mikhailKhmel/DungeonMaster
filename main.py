@@ -5,13 +5,12 @@ import random
 from renderGameTest import *
 from renderInv import *
 from mob import *
+from config import *
 
 # здесь определяются константы, классы и функции
 FPS = 15
 STEP = 64
 
-player = {'level': 1, 'type': random.randint(1,4), 'i':0, 'j':0, 'hp':6, 'arm':0}
-enemy = {'lvl':1,'i':0, 'j':0, 'hp':2}
 
 WINDOW_HEIGHT = 1024
 WINDOW_WEIGHT = 800
@@ -31,11 +30,11 @@ clock = pygame.time.Clock()
 
 # если надо до цикла отобразить объекты на экране
 
-maps = loadMap(player['level'])
-renderMap(maps,player,sc)
-logSystem.scanLog(maps,player,sc)
+maps = loadMap()
+renderMap(maps,sc)
+logSystem.scanLog(maps,sc)
 
-inv = loadInv(player)
+inv = loadInv()
 surfSelect.set_alpha(0)
 renderInv(inv,surfSelect,0,0,sc)
 
@@ -54,39 +53,39 @@ while True:
 		elif i.type == pygame.KEYDOWN:
 			if i.key == pygame.K_UP:
 				tmp = maps
-				maps = renderList(-1,0,level,tmp,player)
+				maps = renderList(-1,0,level,tmp)
 				tmp = maps
-				maps = mobMovement(tmp, enemy, player)
+				maps = mobMovement(tmp, enemy)
 				print(player['hp'])
 			elif i.key == pygame.K_RIGHT:
 				tmp = maps
-				maps = renderList(0,1,level,tmp,player)
+				maps = renderList(0,1,level,tmp)
 				tmp = maps
-				maps = mobMovement(tmp, enemy, player)
+				maps = mobMovement(tmp, enemy)
 				print(player['hp'])
 			elif i.key == pygame.K_DOWN:
 				tmp = maps
-				maps = renderList(1,0,level,tmp,player)
+				maps = renderList(1,0,level,tmp)
 				tmp = maps
-				maps = mobMovement(tmp, enemy, player)
+				maps = mobMovement(tmp, enemy)
 				print(player['hp'])
 			elif i.key == pygame.K_LEFT:
 				tmp = maps
-				maps = renderList(0,-1,level,tmp,player)
+				maps = renderList(0,-1,level,tmp)
 				tmp = maps
-				maps = mobMovement(tmp, enemy, player)
+				maps = mobMovement(tmp, enemy)
 				print(player['hp'])
 			elif i.key == pygame.K_SPACE:
 				tmp = maps
-				tmp = mobKiller(tmp, enemy, player)
+				tmp = mobKiller(tmp, enemy)
 				maps = tmp
 			elif i.key == pygame.K_i:
-				openInv(inv,maps,player,sc)
+				openInv(inv,maps,sc)
 			else:
 				print('ERROR KEY')
 
-	renderMap(maps,player,sc)
-	logSystem.scanLog(maps,player,sc)
+	renderMap(maps,sc)
+	logSystem.scanLog(maps,sc)
 
 	# обновление экрана
 	pygame.display.update()

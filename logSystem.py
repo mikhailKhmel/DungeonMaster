@@ -1,4 +1,5 @@
 import pygame
+from config import *
 
 STEP = 64
 
@@ -10,7 +11,7 @@ GAME_WEIGHT = 576
 
 surfLog = pygame.Surface((WINDOW_HEIGHT,STEP))
 
-def scanLog(maps,player,sc):
+def scanLog(maps,sc):
 	surfLog.fill((0,0,0))
 
 	s = 'УРОВЕНЬ: ' + str(player['level']) + ' Up - вверх, Right - вправо, Down - вниз, Left - влево'

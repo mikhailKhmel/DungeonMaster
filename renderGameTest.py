@@ -1,5 +1,7 @@
 import pygame
 import random
+from config import *
+
 
 STEP = 64
 
@@ -19,9 +21,47 @@ surfGameLight = pygame.Surface((GAME_HEIGHT-4*STEP,GAME_HEIGHT-4*STEP))
 surfHp = pygame.Surface((STEP,GAME_WEIGHT))
 
 
-def loadMap(level):
-	#print('level=',level)
-	path = 'maps/map' + str(level) + '.txt'
+def blitImg(tpe,dark,dx,dy):
+
+	if dark==True:
+		if tpe=='1':
+			img=pygame.image.load(dictEnv[1]+'/dark/tipo_stena.bmp')
+			img_rect=img.get_rect(topleft=(dx,dy))
+			surfGameLight.blit(img,img_rect)
+		else:
+			img=pygame.image.load(dictEnv[0]+'/dark/plitka1.bmp')
+			img_rect=img.get_rect(topleft=(dx,dy))
+			surfGameLight.blit(img,img_rect)
+	else:
+		if tpe=='0':
+			img=pygame.image.load(dictEnv[0]+'/light/plitka1.bmp')
+			img_rect=img.get_rect(topleft=(dx,dy))
+			surfGameLight.blit(img,img_rect)
+		elif tpe=='1':
+			img=pygame.image.load(dictEnv[1]+'/light/tipo_stena.bmp')
+			img_rect=img.get_rect(topleft=(dx,dy))
+			surfGameLight.blit(img,img_rect)
+		elif tpe=='2':
+			img=pygame.image.load(dictEnv[2])
+			img_rect=img.get_rect(topleft=(dx,dy))
+			surfGameLight.blit(img,img_rect)
+		elif tpe=='3':
+			img=pygame.image.load(dictEnv[3])
+			img_rect=img.get_rect(topleft=(dx,dy))
+			surfGameLight.blit(img,img_rect)
+		elif tpe=='4':
+			img=pygame.image.load(dictEnv[4])
+			img_rect=img.get_rect(topleft=(dx,dy))
+			surfGameLight.blit(img,img_rect)
+		
+		elif tpe=='5':
+			img=pygame.image.load(dictEnv[5])
+			img_rect=img.get_rect(topleft=(dx,dy))
+			surfGameLight.blit(img,img_rect)
+
+def loadMap():
+	print('level=',player['level'])
+	path = 'maps/map' + str(player['level']) + '.txt'
 	f = open(path, 'r')
 	s = f.read()
 	m = []
@@ -36,15 +76,8 @@ def loadMap(level):
 	return m
 
 
-def renderMap(maps,player,sc):
-	dictEnv = {	0: 'srcBMP/env',
-				1: 'srcBMP/env',
-				2: 'srcBMP/player/'+str(player['type'])+'.bmp',
-				3: 'srcBMP/env/light/ladder.bmp',
-				4: 'srcBMP/env/light/chest.bmp',
-				5: 'srcBMP/env/light/mob.png'
-			}
-			
+def renderMap(maps,sc):
+
 	for i in range(0,len(maps)):
 		for j in range(0,len(maps[i])):
 			if maps[i][j] == '2':
@@ -78,14 +111,7 @@ def renderMap(maps,player,sc):
 	startJlight = player['j'] - 2
 	endIlight = startIlight + 5
 	endJlight = startJlight + 5
-	# lightZone = []
-	# tmp=[]
-	# for i in range(startIlight,endIlight):
-	# 	for j in range(startJlight,endJlight):
-	# 		tmp.append(maps[i][j])
-	# 	lightZone.append(tmp)
-	# 	tmp=[]
-	# print(lightZone)
+
 	x=0
 	y=0
 	c=0
@@ -99,321 +125,58 @@ def renderMap(maps,player,sc):
 			if c in sector1 or c in sector2 or c in sector3 or c in sector4 or c in sector5:
 				if c in sector1:
 					if maps[i+1][j]=='1':
-						if maps[i][j]=='1':
-							img=pygame.image.load(dictEnv[1]+'/dark/tipo_stena.bmp')
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						else:
-							img=pygame.image.load(dictEnv[0]+'/dark/plitka1.bmp')
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
+						blitImg(maps[i][j],True,x,y)
 					else:
-						if maps[i][j]=='0':
-							img=pygame.image.load(dictEnv[0]+'/light/plitka1.bmp')
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='1':
-							img=pygame.image.load(dictEnv[1]+'/light/tipo_stena.bmp')
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='2':
-							img=pygame.image.load(dictEnv[2])
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='3':
-							img=pygame.image.load(dictEnv[3])
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='4':
-							img=pygame.image.load(dictEnv[4])
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						
-						elif maps[i][j]=='5':
-							img=pygame.image.load(dictEnv[5])
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)	
+						blitImg(maps[i][j],False,x,y)
+
 				if c in sector2:
 					if maps[i][j+1]=='1':
-						if maps[i][j]=='1':
-							img=pygame.image.load(dictEnv[1]+'/dark/tipo_stena.bmp')
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						else:
-							img=pygame.image.load(dictEnv[0]+'/dark/plitka1.bmp')
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
+						blitImg(maps[i][j],True,x,y)
 					else:
-						if maps[i][j]=='0':
-							img=pygame.image.load(dictEnv[0]+'/light/plitka1.bmp')
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='1':
-							img=pygame.image.load(dictEnv[1]+'/light/tipo_stena.bmp')
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='2':
-							img=pygame.image.load(dictEnv[2])
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='3':
-							img=pygame.image.load(dictEnv[3])
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='4':
-							img=pygame.image.load(dictEnv[4])
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						
-						elif maps[i][j]=='5':
-							img=pygame.image.load(dictEnv[5])
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)		
+						blitImg(maps[i][j],False,x,y)
+
 				if c in sector3:
 					if maps[i][j-1]=='1':
-							if maps[i][j]=='1':
-								img=pygame.image.load(dictEnv[1]+'/dark/tipo_stena.bmp')
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							else:
-								img=pygame.image.load(dictEnv[0]+'/dark/plitka1.bmp')
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
+						blitImg(maps[i][j],True,x,y)
 					else:
-						if maps[i][j]=='0':
-							img=pygame.image.load(dictEnv[0]+'/light/plitka1.bmp')
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='1':
-							img=pygame.image.load(dictEnv[1]+'/light/tipo_stena.bmp')
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='2':
-							img=pygame.image.load(dictEnv[2])
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='3':
-							img=pygame.image.load(dictEnv[3])
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='4':
-							img=pygame.image.load(dictEnv[4])
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='5':
-							img=pygame.image.load(dictEnv[5])
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)	
+						blitImg(maps[i][j],False,x,y)
+
 				if c in sector4:
 					if maps[i-1][j]=='1':
-						if maps[i][j]=='1':
-							img=pygame.image.load(dictEnv[1]+'/dark/tipo_stena.bmp')
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						else:
-							img=pygame.image.load(dictEnv[0]+'/dark/plitka1.bmp')
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
+						blitImg(maps[i][j],True,x,y)
 					else:
-						if maps[i][j]=='0':
-							img=pygame.image.load(dictEnv[0]+'/light/plitka1.bmp')
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='1':
-							img=pygame.image.load(dictEnv[1]+'/light/tipo_stena.bmp')
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='2':
-							img=pygame.image.load(dictEnv[2])
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='3':
-							img=pygame.image.load(dictEnv[3])
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='4':
-							img=pygame.image.load(dictEnv[4])
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
-						elif maps[i][j]=='5':
-							img=pygame.image.load(dictEnv[5])
-							img_rect=img.get_rect(topleft=(x,y))
-							surfGameLight.blit(img,img_rect)
+						blitImg(maps[i][j],False,x,y)
+
 				if c in sector5:
 					if c==0:
 						if maps[i+1][j+1]=='1':
-							if maps[i][j]=='1':
-								img=pygame.image.load(dictEnv[1]+'/dark/tipo_stena.bmp')
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							else:
-								img=pygame.image.load(dictEnv[0]+'/dark/plitka1.bmp')
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
+							blitImg(maps[i][j],True,x,y)
 						else:
-							if maps[i][j]=='0':
-								img=pygame.image.load(dictEnv[0]+'/light/plitka1.bmp')
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='1':
-								img=pygame.image.load(dictEnv[1]+'/light/tipo_stena.bmp')
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='2':
-								img=pygame.image.load(dictEnv[2])
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='3':
-								img=pygame.image.load(dictEnv[3])
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='4':
-								img=pygame.image.load(dictEnv[4])
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='5':
-								img=pygame.image.load(dictEnv[5])
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
+							blitImg(maps[i][j],False,x,y)
+
 					if c==4:
 						if maps[i+1][j-1]=='1':
-							if maps[i][j]=='1':
-								img=pygame.image.load(dictEnv[1]+'/dark/tipo_stena.bmp')
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							else:
-								img=pygame.image.load(dictEnv[0]+'/dark/plitka1.bmp')
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
+							blitImg(maps[i][j],True,x,y)
 						else:
-							if maps[i][j]=='0':
-								img=pygame.image.load(dictEnv[0]+'/light/plitka1.bmp')
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='1':
-								img=pygame.image.load(dictEnv[1]+'/light/tipo_stena.bmp')
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='2':
-								img=pygame.image.load(dictEnv[2])
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='3':
-								img=pygame.image.load(dictEnv[3])
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='4':
-								img=pygame.image.load(dictEnv[4])
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='5':
-								img=pygame.image.load(dictEnv[5])
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
+							blitImg(maps[i][j],False,x,y)
+
 					if c==20:
 						if maps[i-1][j+1]=='1':
-							if maps[i][j]=='1':
-								img=pygame.image.load(dictEnv[1]+'/dark/tipo_stena.bmp')
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							else:
-								img=pygame.image.load(dictEnv[0]+'/dark/plitka1.bmp')
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
+							blitImg(maps[i][j],True,x,y)
 						else:
-							if maps[i][j]=='0':
-								img=pygame.image.load(dictEnv[0]+'/light/plitka1.bmp')
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='1':
-								img=pygame.image.load(dictEnv[1]+'/light/tipo_stena.bmp')
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='2':
-								img=pygame.image.load(dictEnv[2])
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='3':
-								img=pygame.image.load(dictEnv[3])
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='4':
-								img=pygame.image.load(dictEnv[4])
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='5':
-								img=pygame.image.load(dictEnv[5])
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)	
+							blitImg(maps[i][j],False,x,y)
+
 					if c==24:
 						if maps[i-1][j-1]=='1':
-							if maps[i][j]=='1':
-								img=pygame.image.load(dictEnv[1]+'/dark/tipo_stena.bmp')
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							else:
-								img=pygame.image.load(dictEnv[0]+'/dark/plitka1.bmp')
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
+							blitImg(maps[i][j],True,x,y)
 						else:
-							if maps[i][j]=='0':
-								img=pygame.image.load(dictEnv[0]+'/light/plitka1.bmp')
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='1':
-								img=pygame.image.load(dictEnv[1]+'/light/tipo_stena.bmp')
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='2':
-								img=pygame.image.load(dictEnv[2])
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='3':
-								img=pygame.image.load(dictEnv[3])
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='4':
-								img=pygame.image.load(dictEnv[4])
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)
-							elif maps[i][j]=='5':
-								img=pygame.image.load(dictEnv[5])
-								img_rect=img.get_rect(topleft=(x,y))
-								surfGameLight.blit(img,img_rect)	
+							blitImg(maps[i][j],False,x,y)	
 			else:
-				if maps[i][j]=='0':
-					img=pygame.image.load(dictEnv[0]+'/light/plitka1.bmp')
-					img_rect=img.get_rect(topleft=(x,y))
-					surfGameLight.blit(img,img_rect)
-				elif maps[i][j]=='1':
-					img=pygame.image.load(dictEnv[1]+'/light/tipo_stena.bmp')
-					img_rect=img.get_rect(topleft=(x,y))
-					surfGameLight.blit(img,img_rect)
-				elif maps[i][j]=='2':
-					img=pygame.image.load(dictEnv[2])
-					img_rect=img.get_rect(topleft=(x,y))
-					surfGameLight.blit(img,img_rect)
-				elif maps[i][j]=='3':
-					img=pygame.image.load(dictEnv[3])
-					img_rect=img.get_rect(topleft=(x,y))
-					surfGameLight.blit(img,img_rect)
-				elif maps[i][j]=='4':
-					img=pygame.image.load(dictEnv[4])
-					img_rect=img.get_rect(topleft=(x,y))
-					surfGameLight.blit(img,img_rect)
-				elif maps[i][j]=='5':
-					img=pygame.image.load(dictEnv[5])
-					img_rect=img.get_rect(topleft=(x,y))
-					surfGameLight.blit(img,img_rect)	
-				
-				
+				blitImg(maps[i][j],False,x,y)	
 			c+=1
 			x+=STEP
 		x=0
 		y+=STEP
-
-
-
 
 	sc.blit(surfGameLight,(STEP*2,STEP*2))
 	hp=[]
@@ -442,7 +205,7 @@ def renderMap(maps,player,sc):
 	#sc.blit(surfHp,(0,GAME_WEIGHT))
 
 
-def renderList(dx,dy,level,tmp,player):
+def renderList(dx,dy,level,tmp):
 	x=0
 	y=0
 	for i in range(0,len(tmp)):
