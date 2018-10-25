@@ -219,7 +219,7 @@ def renderList(dx,dy,level,tmp):
 		pass
 	elif tmp[x+dx][y+dy] == '3':
 		player['level']+=1
-		tmp=loadMap(player['level'])
+		tmp=loadMap()
 	elif tmp[x+dx][y+dy] == '5':
 		pass
 	else:
