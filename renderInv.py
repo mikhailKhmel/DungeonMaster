@@ -30,11 +30,7 @@ def loadInv():
 	if player['type'] == 1:
 		m[1][1] = 'd'
 	elif player['type'] == 2:
-		m[1][1] = 'f'
-	elif player['type'] == 3:
 		m[1][1] = 'e'
-	elif player['type'] == 4:
-		m[1][1] = 'g'
 #	print(m)
 	return m
 
@@ -73,16 +69,6 @@ def renderInv(inv,surfSelect,a,b,sc):
 				imge_rect = imge.get_rect(topleft=(x,y))
 				surfInv.blit(imge,imge_rect)
 				x+=STEP
-			elif inv[i][j]=='f':
-				imgf = pygame.image.load('srcBMP/inv/invbow.bmp')
-				imgf_rect = imgf.get_rect(topleft=(x,y))
-				surfInv.blit(imgf,imgf_rect)
-				x+=STEP
-			elif inv[i][j]=='g':
-				imgg = pygame.image.load('srcBMP/inv/invtorch.bmp')
-				imgg_rect = imgg.get_rect(topleft=(x,y))
-				surfInv.blit(imgg,imgg_rect)
-				x+=STEP
 			elif inv[i][j]=='h':
 				imgh = pygame.image.load('srcBMP/inv/invarmour0.bmp')
 				imgh_rect = imgh.get_rect(topleft=(x,y))
@@ -97,11 +83,6 @@ def renderInv(inv,surfSelect,a,b,sc):
 				imgj = pygame.image.load('srcBMP/inv/invarmour2.bmp')
 				imgj_rect = imgj.get_rect(topleft=(x,y))
 				surfInv.blit(imgj,imgj_rect)
-				x+=STEP
-			elif inv[i][j]=='k':
-				imgk = pygame.image.load('srcBMP/inv/invarmour3.bmp')
-				imgk_rect = imgk.get_rect(topleft=(x,y))
-				surfInv.blit(imgk,imgk_rect)
 				x+=STEP
 		x = 0
 		y += STEP
@@ -123,48 +104,48 @@ def openInv(inv,maps,player,sc):
 			elif i.type == pygame.KEYDOWN:
 				if i.key == pygame.K_i:
 					surfSelect.set_alpha(0)
+					print(player['arm'],'-',player['type'])
 					renderInv(inv,surfSelect,a,b,sc)
 					return
 				elif i.key == pygame.K_e:
-				#	Использование зелья
+					#Использование зелья
 					if inv[a][b] == 'a':
 						player['hp'] +=2
 						if player['hp'] > 6:
 							player['hp'] = 6
 						inv[a][b] = '1'
-				#	Замена экипировки
+					#Замена экипировки
 					elif inv[a][b] == 'd':
 						inv[a][b] = inv[1][1]
 						inv[1][1] = 'd'
 						player['type'] = 1
+						refreshPlayer(player)
 					elif inv[a][b] == 'e':
 						inv[a][b] = inv[1][1]
 						inv[1][1] = 'e'
-						player['type'] = 3
-					elif inv[a][b] == 'f':
-						inv[a][b] = inv[1][1]
-						inv[1][1] = 'f'
 						player['type'] = 2
-					elif inv[a][b] == 'g':
-						inv[a][b] = inv[1][1]
-						inv[1][1] = 'g'
-						player['type'] = 4
-				#	Замена брони
+						refreshPlayer(player)
+					#Замена брони
 					elif inv[a][b] == 'i':
 						if player['arm'] < 1:
 							inv[a][b] = inv[3][1]
 							inv[3][1] = 'i'
 							player['arm'] = 1
+							refreshPlayer(player)
 					elif inv[a][b] == 'j':
 						if player['arm'] < 2:
 							inv[a][b] = inv[3][1]
 							inv[3][1] = 'j'
 							player['arm'] = 2
-					elif inv[a][b] == 'k':
-						if player['arm'] < 3:
-							inv[a][b] = inv[3][1]
-							inv[3][1] = 'k'
-							player['arm'] = 3
+							refreshPlayer(player)
+				#Деекипировка
+				elif i.key == pygame.K_r:
+					if inv[a][b] == '1':
+						inv[a][b] = inv[1][1]
+						inv[1][1] = '1'
+						player['type'] = 0
+						refreshPlayer(player)
+				#Уничтожение вещи
 				elif i.key == pygame.K_q:
 					inv[a][b] = '1'
 				elif i.key == pygame.K_UP:
@@ -186,5 +167,8 @@ def openInv(inv,maps,player,sc):
 				else:
 					print('ERROR KEY')
 		renderInv(inv,surfSelect,a,b,sc)
-		renderMap(maps,player,sc)
+		renderMap(maps,sc)
 		pygame.display.update()
+		
+def refreshPlayer(player):
+	dictEnv[2] = 'srcBMP/player/player'+str(player['arm'])+str(player['type'])+'.bmp'
