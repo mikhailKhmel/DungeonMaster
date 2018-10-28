@@ -68,8 +68,6 @@ class Menu:
 								PROC +=10
 								volume = PROC / 100
 								pygame.mixer.music.set_volume(volume)
-								window.fill((0, 0, 0))
-								pygame.display.update()
 								openMenu(PROC, punkt)
 								done = False
 				if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
