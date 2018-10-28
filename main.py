@@ -6,11 +6,13 @@ from renderGameTest import *
 from renderInv import *
 from mob import *
 from config import *
+from menu import *
+from music import *
 
 # здесь определяются константы, классы и функции
 FPS = 15
 STEP = 64
-
+PROC = 100
 
 WINDOW_HEIGHT = 1024
 WINDOW_WEIGHT = 800
@@ -26,9 +28,18 @@ pygame.init()
 sc = pygame.display.set_mode((WINDOW_HEIGHT, WINDOW_WEIGHT))
 sc.fill((0,0,0))
 
-clock = pygame.time.Clock()
+# Настройка звука
+mainMusic = 'music/main.mp3'
+udar = pygame.mixer.Sound('music/udar.ogg')
+smert = pygame.mixer.Sound('music/smert.ogg')
+
+openMusic(mainMusic)
+
 
 # если надо до цикла отобразить объекты на экране
+menu = openMenu(100, punkt = 0)
+print('PUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU = ', menu)
+sc.fill((0,0,0))
 
 maps = loadMap()
 renderMap(maps,sc)
@@ -76,10 +87,18 @@ while True:
 				maps = mobMovement(tmp)
 				print(player['hp'])
 			elif i.key == pygame.K_SPACE:
+				openSound(udar)
 				tmp = maps
 				maps = mobKiller(tmp)
 			elif i.key == pygame.K_i:
-				openInv(inv,maps, player, sc)
+				openInv(inv,maps,sc)
+			elif i.key == pygame.K_ESCAPE:
+				openMenu(100, punkt = 0)
+				sc.fill((0,0,0))
+				renderMap(maps,sc)
+				logSystem.scanLog(maps,sc)
+				surfSelect.set_alpha(0)
+				renderInv(inv,surfSelect,0,0,sc)
 			else:
 				print('ERROR KEY')
 
