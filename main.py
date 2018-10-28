@@ -91,7 +91,7 @@ while True:
 				tmp = maps
 				maps = mobKiller(tmp)
 			elif i.key == pygame.K_i:
-				openInv(inv,maps,sc)
+				openInv(inv,maps,player, sc)
 			elif i.key == pygame.K_ESCAPE:
 				openMenu(100, punkt = 0)
 				sc.fill((0,0,0))
