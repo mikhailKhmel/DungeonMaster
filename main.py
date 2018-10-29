@@ -28,11 +28,21 @@ sc.fill((0,0,0))
 
 clock = pygame.time.Clock()
 
+def searchChests():
+	x = player['i']
+	y = player['j']
+	for i in range(x-2,x+2):
+		for j in range(y-2,y+2):
+			if maps[i][j] == '4':
+				logSystem.blitLog('game',True,sc)
+			else:
+				logSystem.blitLog('game',False,sc)
+	
+
 # если надо до цикла отобразить объекты на экране
 
 maps = loadMap()
 renderMap(maps,sc)
-logSystem.scanLog(maps,sc)
 
 inv = loadInv()
 surfSelect.set_alpha(0)
@@ -52,24 +62,28 @@ while True:
 			exit()
 		elif i.type == pygame.KEYDOWN:
 			if i.key == pygame.K_UP:
+				
 				tmp = maps
 				maps = renderList(-1,0,level,tmp)
 				tmp = maps
 				maps = mobMovement(tmp)
 				print(player['hp'])
 			elif i.key == pygame.K_RIGHT:
+				
 				tmp = maps
 				maps = renderList(0,1,level,tmp)
 				tmp = maps
 				maps = mobMovement(tmp)
 				print(player['hp'])
 			elif i.key == pygame.K_DOWN:
+				
 				tmp = maps
 				maps = renderList(1,0,level,tmp)
 				tmp = maps
 				maps = mobMovement(tmp)
 				print(player['hp'])
 			elif i.key == pygame.K_LEFT:
+				
 				tmp = maps
 				maps = renderList(0,-1,level,tmp)
 				tmp = maps
@@ -79,12 +93,14 @@ while True:
 				tmp = maps
 				maps = mobKiller(tmp)
 			elif i.key == pygame.K_i:
+				logSystem.blitLog('inv',False,sc)
 				openInv(inv,maps, player, sc)
 			else:
 				print('ERROR KEY')
+			searchChests()
 
 	renderMap(maps,sc)
-	logSystem.scanLog(maps,sc)
+	searchChests()
 
 	# обновление экрана
 	pygame.display.update()

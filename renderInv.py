@@ -1,4 +1,4 @@
-import pygame
+import pygame, logSystem
 from renderGameTest import *
 from config import *
 
@@ -103,6 +103,7 @@ def openInv(inv,maps,player,sc):
 				exit()
 			elif i.type == pygame.KEYDOWN:
 				if i.key == pygame.K_i:
+					logSystem.blitLog('inv',False,sc)
 					surfSelect.set_alpha(0)
 					print(player['arm'],'-',player['type'])
 					renderInv(inv,surfSelect,a,b,sc)
@@ -138,6 +139,8 @@ def openInv(inv,maps,player,sc):
 							inv[3][1] = 'j'
 							player['arm'] = 2
 							refreshPlayer(player)
+						else:
+							logSystem.blitLog('inv',True,sc)
 				#Деекипировка
 				elif i.key == pygame.K_r:
 					if inv[a][b] == '1':
