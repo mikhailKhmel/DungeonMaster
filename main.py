@@ -8,7 +8,7 @@ from mob import *
 from config import *
 
 # здесь определяются константы, классы и функции
-FPS = 15
+FPS = 10
 STEP = 64
 
 
