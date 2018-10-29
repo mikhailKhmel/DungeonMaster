@@ -1,4 +1,5 @@
 import pygame
+import random
 from config import *
 
 STEP = 64
