@@ -31,7 +31,7 @@ sc.fill((0,0,0))
 # Настройка звука
 mainMusic = 'music/main.mp3'
 openMusic(mainMusic)
-
+print('qq')
 
 # если надо до цикла отобразить объекты на экране
 menu = openMenu(punkt = 0)
