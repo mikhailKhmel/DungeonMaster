@@ -1,6 +1,8 @@
 import pygame
 from renderGameTest import *
 from config import *
+from music import *
+import config
 
 STEP = 64
 
@@ -15,6 +17,8 @@ INV_WEIGHT = GAME_WEIGHT
 
 surfInv = pygame.Surface((INV_HEIGHT,INV_WEIGHT))
 surfSelect = pygame.Surface((STEP,STEP))
+
+glotok = pygame.mixer.Sound('music/glotok.ogg')
 
 def loadInv():
 	f = open('inv.txt', 'r')
@@ -110,6 +114,9 @@ def openInv(inv,maps,player,sc):
 				elif i.key == pygame.K_e:
 					#Использование зелья
 					if inv[a][b] == 'a':
+						volume = config.PROCENT / 100
+						glotok.set_volume(volume)
+						openSound(glotok)
 						player['hp'] +=2
 						if player['hp'] > 6:
 							player['hp'] = 6
