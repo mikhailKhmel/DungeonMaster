@@ -27,7 +27,7 @@ class Menu:
 				poverhnost.blit(font.render(i[2], 1, i[3]), (i[0], i[1]))
 	def menu(self, punkt):
 		done = True
-		font_menu = pygame.font.Font(None, 50)
+		font_menu = pygame.font.SysFont("arial", 50)
 		pygame.key.set_repeat(0,0)
 		pygame.mouse.set_visible(True)
 		while done:
