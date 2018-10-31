@@ -1,6 +1,7 @@
 import pygame
 import sys
 from music import *
+import config
 
 window = pygame.display.set_mode((1024, 800))
 pygame.display.set_caption('DungeonMaster')
@@ -8,13 +9,12 @@ screen = pygame.Surface((1024, 800))
 
 
 
-def openMenu(PROC, punkt):
-	
+def openMenu(punkt):
 	punkts = [(500, 400, u'Play', (11, 0, 77), (250,250,30), 0),
-			  (500, 440, u'Sound ' + str(PROC) +'%', (11, 0, 77), (250, 250, 30), 1),
+			  (500, 440, u'Sound ' + str(config.PROCENT) +'%', (11, 0, 77), (250, 250, 30), 1),
 			  (500, 480, u'Exit', (11, 0, 77), (250,250,30), 2)]
 	game = Menu(punkts)
-	game.menu(PROC, punkt)
+	game.menu(punkt)
 
 class Menu:
 	def __init__(self, punkts = [400, 350, u'Punkt', (250,250,30), (250,30,250)]):
@@ -25,7 +25,7 @@ class Menu:
 				poverhnost.blit(font.render(i[2], 1, i[4]), (i[0], i[1]))
 			else:
 				poverhnost.blit(font.render(i[2], 1, i[3]), (i[0], i[1]))
-	def menu(self, PROC, punkt):
+	def menu(self, punkt):
 		done = True
 		font_menu = pygame.font.Font(None, 50)
 		pygame.key.set_repeat(0,0)
@@ -56,19 +56,19 @@ class Menu:
 								exit()
 					if e.key == pygame.K_LEFT:
 						if punkt == 1:
-							if PROC > 10:
-								PROC -=10
-								volume = PROC / 100
+							if config.PROCENT > 10:
+								config.PROCENT -=10
+								volume = config.PROCENT / 100
 								pygame.mixer.music.set_volume(volume)
-								openMenu(PROC, punkt)
+								openMenu(punkt)
 								done = False
 					if e.key == pygame.K_RIGHT:
 						if punkt == 1:
-							if PROC < 100:
-								PROC +=10
-								volume = PROC / 100
+							if config.PROCENT < 100:
+								config.PROCENT +=10
+								volume = config.PROCENT / 100
 								pygame.mixer.music.set_volume(volume)
-								openMenu(PROC, punkt)
+								openMenu(punkt)
 								done = False
 				if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
 					if punkt == 0:
@@ -77,5 +77,3 @@ class Menu:
 						exit()
 			window.blit(screen, (0, 0))
 			pygame.display.update()
-			if done == False:
-				return PROC

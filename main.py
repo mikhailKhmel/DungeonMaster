@@ -37,8 +37,8 @@ openMusic(mainMusic)
 
 
 # если надо до цикла отобразить объекты на экране
-menu = openMenu(100, punkt = 0)
-print('PUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU = ', menu)
+menu = openMenu(punkt = 0)
+print('PUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU = ', PROCENT)
 sc.fill((0,0,0))
 
 maps = loadMap()
@@ -93,7 +93,7 @@ while True:
 			elif i.key == pygame.K_i:
 				openInv(inv,maps,player, sc)
 			elif i.key == pygame.K_ESCAPE:
-				openMenu(100, punkt = 0)
+				openMenu(punkt = 0)
 				sc.fill((0,0,0))
 				renderMap(maps,sc)
 				logSystem.scanLog(maps,sc)
