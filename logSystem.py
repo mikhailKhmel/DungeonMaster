@@ -1,10 +1,6 @@
 import pygame
-<<<<<<< Updated upstream
-import random
-from config import *
-=======
 import config
->>>>>>> Stashed changes
+
 
 STEP = 64
 
@@ -15,13 +11,15 @@ GAME_HEIGHT = 576
 GAME_WEIGHT = 576
 
 logmsgGame = ['УРОВЕНЬ: ' + str(config.player['level']) + ' Up - вверх, Right - вправо, Down - вниз, Left - влево',
-				'I - открыть инвентарь',
-				'E - открыть сундук']
+				'I - открыть инвентарь']
+
+logmsgGameAdd = ['E - открыть сундук']
 
 logmsgInv = ['E - Экипировать или использовать',
 				'R - снять оружие',
-				'Q - уничтожить предмет',
-				'На вас надета более прочная броня']
+				'Q - уничтожить предмет']
+
+logmsgInvAdd = ['На вас надета более прочная броня']
 
 surfLog = pygame.Surface((WINDOW_HEIGHT,WINDOW_WEIGHT-GAME_HEIGHT))
 
@@ -33,29 +31,36 @@ def blitLog(t,addition,sc):
 
 	if t == 'game':
 		x = 0
-		for s in range(0,len(logmsgGame)-2):
+		for s in logmsgGame:
 			font = pygame.font.SysFont('arial',20)
-			text = font.render(logmsgGame[s], 1, (255,255,255))
+			text = font.render(s, 1, (255,255,255))
 			surfLog.blit(text,(0,x))
 			x+=20
-		if addition==True:
-			font = pygame.font.SysFont('arial',20)
-			text = font.render(logmsgGame[len(logmsgGame)-1],True,(255,255,255))
-			surfLog.blit(text,(0,x))
+		i=0
+		for s in addition:
+			if s == True:
+				font = pygame.font.SysFont('arial',20)
+				text = font.render(logmsgGameAdd[i],1,(255,255,255))
+				surfLog.blit(text,(0,x))
+				x+=20
+				i+=1
 		sc.blit(surfLog,(0,GAME_HEIGHT+STEP))
 		return
-	else:
+	elif t == 'inv':
 		x = 0
-		print('inv')
-		for s in range(0,len(logmsgInv)-2):
+		for s in logmsgInv:
 			font = pygame.font.SysFont('arial',20)
-			text = font.render(logmsgInv[s], 1, (255,255,255))
+			text = font.render(s, 1, (255,255,255))
 			surfLog.blit(text,(0,x))
 			x+=20
-		if addition==True:
-			font = pygame.font.SysFont('arial',20)
-			text = font.render(logmsgInv[len(logmsgInv)-1],True,(255,255,255))
-			surfLog.blit(text,(0,x))
+		i=0
+		for s in addition:
+			if s == True:
+				font = pygame.font.SysFont('arial',20)
+				text = font.render(logmsgInvAdd[i],1,(255,255,255))
+				surfLog.blit(text,(0,x))
+				x+=20
+				i+=1
 		sc.blit(surfLog,(0,GAME_HEIGHT+STEP))
 		return
 	
