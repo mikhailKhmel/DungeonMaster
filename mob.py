@@ -58,6 +58,7 @@ def mobKiller(tmp):
 	if tmp[xPl][yPl] == '2' and (tmp[xPl][yPl+1] == '5' or tmp[xPl+1][yPl] == '5' or tmp[xPl][yPl-1] == '5' or tmp[xPl-1][yPl] == '5'):
 		enemyHp = config.enemy['hp'] - 1
 		config.enemy['hp'] = enemyHp
+		openSound(udar)
 		if config.enemy['hp'] == 0 and config.amount == 0:
 			if tmp[xPl][yPl+1] == '5':
 				tmp[xPl][yPl+1] = '0'
