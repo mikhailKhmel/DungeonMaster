@@ -30,8 +30,8 @@ sc.fill((0,0,0))
 
 # Настройка звука
 mainMusic = 'music/main.mp3'
-udar = pygame.mixer.Sound('music/udar.ogg')
-smert = pygame.mixer.Sound('music/smert.ogg')
+# udar = pygame.mixer.Sound('music/udar.ogg')
+# smert = pygame.mixer.Sound('music/smert.ogg')
 
 openMusic(mainMusic)
 
@@ -87,7 +87,6 @@ while True:
 				maps = mobMovement(tmp)
 				print(player['hp'])
 			elif i.key == pygame.K_SPACE:
-				openSound(udar)
 				tmp = maps
 				maps = mobKiller(tmp)
 			elif i.key == pygame.K_i:
