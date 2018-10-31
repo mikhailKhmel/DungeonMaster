@@ -30,15 +30,11 @@ sc.fill((0,0,0))
 
 # Настройка звука
 mainMusic = 'music/main.mp3'
-# udar = pygame.mixer.Sound('music/udar.ogg')
-# smert = pygame.mixer.Sound('music/smert.ogg')
-
 openMusic(mainMusic)
 
 
 # если надо до цикла отобразить объекты на экране
 menu = openMenu(punkt = 0)
-print('PUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU = ', PROCENT)
 sc.fill((0,0,0))
 
 maps = loadMap()
