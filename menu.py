@@ -49,15 +49,15 @@ class Menu:
 					if e.key == pygame.K_DOWN:
 						if punkt < len(self.punkts)-1:
 							punkt += 1
-					if e.key == pygame.K_SPACE:
+					if e.key == pygame.K_RETURN:
 						if punkt == 0:
 							done = False
 						elif punkt == 2:
 								exit()
 					if e.key == pygame.K_LEFT:
 						if punkt == 1:
-							if config.PROCENT > 10:
-								config.PROCENT -=10
+							if config.PROCENT > 0:
+								config.PROCENT -=5
 								volume = config.PROCENT / 100
 								pygame.mixer.music.set_volume(volume)
 								openMenu(punkt)
@@ -65,7 +65,7 @@ class Menu:
 					if e.key == pygame.K_RIGHT:
 						if punkt == 1:
 							if config.PROCENT < 100:
-								config.PROCENT +=10
+								config.PROCENT +=5
 								volume = config.PROCENT / 100
 								pygame.mixer.music.set_volume(volume)
 								openMenu(punkt)
