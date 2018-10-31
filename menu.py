@@ -6,13 +6,13 @@ import config
 window = pygame.display.set_mode((1024, 800))
 pygame.display.set_caption('DungeonMaster')
 screen = pygame.Surface((1024, 800))
-
+image_menu = pygame.image.load('srcBMP/menu/'+str(config.MENU)+'.bmp')
 
 
 def openMenu(punkt):
-	punkts = [(500, 400, u'Play', (11, 0, 77), (250,250,30), 0),
-			  (500, 440, u'Sound ' + str(config.PROCENT) +'%', (11, 0, 77), (250, 250, 30), 1),
-			  (500, 480, u'Exit', (11, 0, 77), (250,250,30), 2)]
+	punkts = [(10, 630, u'Play', (255, 255, 255), (250,250,30), 0),
+			  (10, 680, u'Sound ' + str(config.PROCENT) +'%', (255, 255, 255), (250, 250, 30), 1),
+			  (10, 730, u'Exit', (255, 255, 255), (250,250,30), 2)]
 	game = Menu(punkts)
 	game.menu(punkt)
 
@@ -31,7 +31,7 @@ class Menu:
 		pygame.key.set_repeat(0,0)
 		pygame.mouse.set_visible(True)
 		while done:
-			screen.fill((0, 100, 200))
+			screen.blit(image_menu,(0,0))
 			mp = pygame.mouse.get_pos()
 			for i in self.punkts:
 				if mp[0]>i[0] and mp[0]<i[0] and mp[1]>i[1] and mp[1]<i[1]+50:
