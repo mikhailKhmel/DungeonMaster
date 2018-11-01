@@ -24,26 +24,38 @@ def redMob(maps,sc):
 	x=player['i']
 	y=player['j']
 	surfMob.set_alpha(0)
-	if maps[x-1][y]=='5':
-		img = pygame.image.load('srcBMP/env/light/redMob.bmp')
-		img_rect = img.get_rect(topleft=(STEP*3,STEP*2))
-		surfMob.blit(img,img_rect)
-		sc.blit(surfMob,img_rect)
-	elif maps[x][y-1]=='5':
-		img = pygame.image.load('srcBMP/env/light/redMob.bmp')
-		img_rect = img.get_rect(topleft=(STEP*2,STEP*3))
-		surfMob.blit(img,img_rect)
-		sc.blit(surfMob,img_rect)
-	elif maps[x+1][y]=='5': 
-		img = pygame.image.load('srcBMP/env/light/redMob.bmp')
-		img_rect = img.get_rect(topleft=(STEP*3,STEP*4))
-		surfMob.blit(img,img_rect)
-		sc.blit(surfMob,img_rect)
-	elif maps[x][y+1]=='5':
-		img = pygame.image.load('srcBMP/env/light/redMob.bmp')
-		img_rect = img.get_rect(topleft=(STEP*4,STEP*3))
-		surfMob.blit(img,img_rect)
-		sc.blit(surfMob,img_rect)
+	dx=0
+	dy=0
+	for i in range(x-1,x+2):
+		for j in range(y-1,y+2):
+			if maps[i][j]=='5':
+				dx=i
+				dy=j
+				print('dx=',dx,'\tdy=',dy)
+			break
+		
+	# if maps[x-1][y]=='5':
+	# 	img = pygame.image.load('srcBMP/env/light/redMob.bmp')
+	# 	img_rect = img.get_rect(topleft=(0,0))
+	# 	surfMob.blit(img,(0,0))
+	# 	surfGameLight.blit(surfMob,(STEP,0))
+	# elif maps[x][y-1]=='5':
+	# 	img = pygame.image.load('srcBMP/env/light/redMob.bmp')
+	# 	img_rect = img.get_rect(topleft=(0,STEP))
+	# 	surfMob.blit(img,(0,0))
+	# 	surfGameLight.blit(surfMob,(STEP*2,STEP*3))
+	# elif maps[x+1][y]=='5': 
+	# 	img = pygame.image.load('srcBMP/env/light/redMob.bmp')
+	# 	img_rect = img.get_rect(topleft=(STEP*2,STEP))
+	# 	surfMob.blit(img,(0,0))
+	# 	surfGameLight.blit(surfMob,(STEP*3,STEP*4))
+	# elif maps[x][y+1]=='5':
+	# 	img = pygame.image.load('srcBMP/env/light/redMob.bmp')
+	# 	img_rect = img.get_rect(topleft=(0,0))
+	# 	surfMob.blit(img,(0,0))
+	# 	surfGameLight.blit(surfMob,(STEP,STEP*2))
+
+	# sc.blit(surfGameLight,(STEP*2,STEP*2))
 
 
 

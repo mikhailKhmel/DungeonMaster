@@ -20,6 +20,7 @@ surfSelect = pygame.Surface((STEP,STEP))
 
 glotok = pygame.mixer.Sound('music/glotok.ogg')
 brosok = pygame.mixer.Sound('music/brosok.ogg')
+
 def loadInv():
 	f = open('inv.txt', 'r')
 	s = f.read()
