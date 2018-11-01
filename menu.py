@@ -70,10 +70,5 @@ class Menu:
 								pygame.mixer.music.set_volume(volume)
 								openMenu(punkt)
 								done = False
-				if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
-					if punkt == 0:
-						done = False
-					elif punkt == 2:
-						exit()
 			window.blit(screen, (0, 0))
 			pygame.display.update()
