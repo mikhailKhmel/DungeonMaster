@@ -31,7 +31,6 @@ sc.fill((0,0,0))
 # Настройка звука
 mainMusic = 'music/main.mp3'
 openMusic(mainMusic)
-print('qq')
 
 def searchChests():
 	x = player['i']
@@ -69,7 +68,6 @@ while True:
 			exit()
 		elif i.type == pygame.KEYDOWN:
 			if i.key == pygame.K_UP:
-				
 				tmp = maps
 				maps = renderList(-1,0,level,tmp)
 				tmp = maps
@@ -77,7 +75,6 @@ while True:
 				print(player['hp'])
 				searchChests()
 			elif i.key == pygame.K_RIGHT:
-				
 				tmp = maps
 				maps = renderList(0,1,level,tmp)
 				tmp = maps
@@ -85,7 +82,6 @@ while True:
 				print(player['hp'])
 				searchChests()
 			elif i.key == pygame.K_DOWN:
-				
 				tmp = maps
 				maps = renderList(1,0,level,tmp)
 				tmp = maps
@@ -93,7 +89,6 @@ while True:
 				print(player['hp'])
 				searchChests()
 			elif i.key == pygame.K_LEFT:
-				
 				tmp = maps
 				maps = renderList(0,-1,level,tmp)
 				tmp = maps
@@ -104,17 +99,15 @@ while True:
 				tmp = maps
 				maps = mobKiller(tmp)
 			elif i.key == pygame.K_i:
+				logSystem.blitLog('inv',[False],sc)
 				openInv(inv,maps,player, sc)
 			elif i.key == pygame.K_ESCAPE:
 				openMenu(punkt = 0)
 				sc.fill((0,0,0))
 				renderMap(maps,sc)
-				logSystem.scanLog(maps,sc)
 				surfSelect.set_alpha(0)
 				renderInv(inv,surfSelect,0,0,sc)
 
-				logSystem.blitLog('inv',[False],sc)
-				openInv(inv,maps, player, sc)
 			elif i.key == pygame.K_e:
 				openChest(inv,maps)
 			else:
