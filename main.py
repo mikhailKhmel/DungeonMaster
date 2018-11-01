@@ -36,7 +36,6 @@ def searchChests():
 	else:
 		logSystem.blitLog('game',[False],sc)
 	
-	
 
 # если надо до цикла отобразить объекты на экране
 
@@ -100,11 +99,14 @@ while True:
 			elif i.key == pygame.K_i:
 				logSystem.blitLog('inv',[False],sc)
 				openInv(inv,maps, player, sc)
+			elif i.key == pygame.K_e:
+				openChest(inv,maps)
 			else:
 				print('ERROR KEY')
 			searchChests()
 
 	renderMap(maps,sc)
-
+	renderInv(inv,surfSelect,0,0,sc)
+	
 	# обновление экрана
 	pygame.display.update()

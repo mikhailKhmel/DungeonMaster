@@ -40,55 +40,55 @@ def renderInv(inv,surfSelect,a,b,sc):
 	for i in range(0,len(inv)):
 		for j in range(0,len(inv[i])):
 			if inv[i][j]=='0':
-				img0 = pygame.image.load('srcBMP/inv/invbg.bmp')
-				img0_rect = img0.get_rect(topleft=(x,y))
-				surfInv.blit(img0,img0_rect)
+				img = pygame.image.load('srcBMP/inv/invbg.bmp')
+				img_rect = img.get_rect(topleft=(x,y))
+				surfInv.blit(img,img_rect)
 				x+=STEP
 			elif inv[i][j]=='1':
-				img1 = pygame.image.load('srcBMP/inv/invempty.bmp')
-				img1_rect = img1.get_rect(topleft=(x,y))
-				surfInv.blit(img1,img1_rect)
+				img = pygame.image.load('srcBMP/inv/invempty.bmp')
+				img_rect = img.get_rect(topleft=(x,y))
+				surfInv.blit(img,img_rect)
 				x+=STEP
 			elif inv[i][j]=='2':
-				img2 = pygame.image.load('srcBMP/inv/statbg.bmp')
-				img2_rect = img2.get_rect(topleft=(x,y))
-				surfInv.blit(img2,img2_rect)
+				img = pygame.image.load('srcBMP/inv/statbg.bmp')
+				img_rect = img.get_rect(topleft=(x,y))
+				surfInv.blit(img,img_rect)
 				x+=STEP
 			elif inv[i][j]=='a':
-				imga = pygame.image.load('srcBMP/inv/invpotion.bmp')
-				imga_rect = imga.get_rect(topleft=(x,y))
-				surfInv.blit(imga,imga_rect)
+				img = pygame.image.load('srcBMP/inv/invpotion.bmp')
+				img_rect = img.get_rect(topleft=(x,y))
+				surfInv.blit(img,img_rect)
 				x+=STEP
 			elif inv[i][j]=='d':
-				imgd = pygame.image.load('srcBMP/inv/invsword.bmp')
-				imgd_rect = imgd.get_rect(topleft=(x,y))
-				surfInv.blit(imgd,imgd_rect)
+				img = pygame.image.load('srcBMP/inv/invsword.bmp')
+				img_rect = img.get_rect(topleft=(x,y))
+				surfInv.blit(img,img_rect)
 				x+=STEP
 			elif inv[i][j]=='e':
-				imge = pygame.image.load('srcBMP/inv/invspear.bmp')
-				imge_rect = imge.get_rect(topleft=(x,y))
-				surfInv.blit(imge,imge_rect)
+				img = pygame.image.load('srcBMP/inv/invspear.bmp')
+				img_rect = img.get_rect(topleft=(x,y))
+				surfInv.blit(img,img_rect)
 				x+=STEP
 			elif inv[i][j]=='h':
-				imgh = pygame.image.load('srcBMP/inv/invarmour0.bmp')
-				imgh_rect = imgh.get_rect(topleft=(x,y))
-				surfInv.blit(imgh,imgh_rect)
+				img = pygame.image.load('srcBMP/inv/invarmour0.bmp')
+				img_rect = img.get_rect(topleft=(x,y))
+				surfInv.blit(img,img_rect)
 				x+=STEP
 			elif inv[i][j]=='i':
-				imgi = pygame.image.load('srcBMP/inv/invarmour1.bmp')
-				imgi_rect = imgi.get_rect(topleft=(x,y))
-				surfInv.blit(imgi,imgi_rect)
+				img = pygame.image.load('srcBMP/inv/invarmour1.bmp')
+				img_rect = img.get_rect(topleft=(x,y))
+				surfInv.blit(img,img_rect)
 				x+=STEP
 			elif inv[i][j]=='j':
-				imgj = pygame.image.load('srcBMP/inv/invarmour2.bmp')
-				imgj_rect = imgj.get_rect(topleft=(x,y))
-				surfInv.blit(imgj,imgj_rect)
+				img = pygame.image.load('srcBMP/inv/invarmour2.bmp')
+				img_rect = img.get_rect(topleft=(x,y))
+				surfInv.blit(img,img_rect)
 				x+=STEP
 		x = 0
 		y += STEP
-	imgS = pygame.image.load('srcBMP/inv/invsel.bmp')
-	imgS_rect = imgS.get_rect(topleft=(a*STEP,b*STEP))
-	surfSelect.blit(imgS,imgS_rect)
+	img = pygame.image.load('srcBMP/inv/invsel.bmp')
+	img_rect = img.get_rect(topleft=(a*STEP,b*STEP))
+	surfSelect.blit(img,img_rect)
 	surfInv.blit(surfSelect,(b*STEP,a*STEP))
 	sc.blit(surfInv,(GAME_HEIGHT,0))
 
@@ -175,3 +175,39 @@ def openInv(inv,maps,player,sc):
 		
 def refreshPlayer(player):
 	dictEnv[2] = 'srcBMP/player/player'+str(player['arm'])+str(player['type'])+'.bmp'
+
+def openChest(inv,maps):
+	x = player['i']
+	y = player['j']
+	if maps[x-1][y-1]=='4' or maps[x-1][y]=='4' or maps[x][y-1]=='4' or maps[x+1][y+1]=='4' or maps[x][y+1]=='4' or maps[x+1][y] == '4' or maps[x+1][y-1] == '4' or maps[x-1][y+1]=='4':
+		for i in range(x-1, x+2):
+			for j in range(y-1, y+2):
+				if maps[i][j]=='4':
+					for a in range(5, len(inv)):
+						for b in range(0, len(inv[a])):
+							if inv[a][b]=='1':
+								addItem(inv,a,b)
+								maps[i][j]='a'
+								return
+					print('You are overencumbered')
+					return
+	else:
+		print('No chest nearby')
+	
+def addItem(inv,x,y):
+	c=random.randint(1,10)
+	if c<7:
+		inv[x][y]='a'
+		print('Potion added')
+	elif c==7:
+		inv[x][y]='d'
+		print('Sword added')
+	elif c==8:
+		inv[x][y]='e'
+		print('Spear & shield added')
+	elif c==9:
+		inv[x][y]='i'
+		print('Leather armour added')
+	elif c==10:
+		inv[x][y]='j'
+		print('Steel armour added')

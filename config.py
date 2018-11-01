@@ -12,6 +12,7 @@ dictEnv = {	0: 'srcBMP/env',
 				2: 'srcBMP/player/player0'+str(player['type'])+'.bmp',
 				3: 'srcBMP/env/light/ladder.bmp',
 				4: 'srcBMP/env/light/chest.bmp',
-				5: 'srcBMP/env/light/mob'+str(random.randint(1,4))+'.bmp'
+				5: 'srcBMP/env/light/mob'+str(random.randint(1,4))+'.bmp',
+				10: 'srcBMP/env/light/emptychest.bmp'
 			}
 
