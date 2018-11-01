@@ -6,11 +6,13 @@ from renderGameTest import *
 from renderInv import *
 from mob import *
 from config import *
+from menu import *
+from music import *
 
 # здесь определяются константы, классы и функции
 FPS = 30
 STEP = 64
-
+PROC = 100
 
 WINDOW_HEIGHT = 1024
 WINDOW_WEIGHT = 800
@@ -26,7 +28,10 @@ pygame.init()
 sc = pygame.display.set_mode((WINDOW_HEIGHT, WINDOW_WEIGHT))
 sc.fill((0,0,0))
 
-clock = pygame.time.Clock()
+# Настройка звука
+mainMusic = 'music/main.mp3'
+openMusic(mainMusic)
+print('qq')
 
 def searchChests():
 	x = player['i']
@@ -38,6 +43,8 @@ def searchChests():
 	
 
 # если надо до цикла отобразить объекты на экране
+menu = openMenu(punkt = 0)
+sc.fill((0,0,0))
 
 maps = loadMap()
 renderMap(maps,sc)
@@ -97,6 +104,15 @@ while True:
 				tmp = maps
 				maps = mobKiller(tmp)
 			elif i.key == pygame.K_i:
+				openInv(inv,maps,player, sc)
+			elif i.key == pygame.K_ESCAPE:
+				openMenu(punkt = 0)
+				sc.fill((0,0,0))
+				renderMap(maps,sc)
+				logSystem.scanLog(maps,sc)
+				surfSelect.set_alpha(0)
+				renderInv(inv,surfSelect,0,0,sc)
+
 				logSystem.blitLog('inv',[False],sc)
 				openInv(inv,maps, player, sc)
 			elif i.key == pygame.K_e:

@@ -1,6 +1,12 @@
 import pygame 
 import random
 import config
+from music import *
+
+
+udar = pygame.mixer.Sound('music/udar.ogg')
+smert = pygame.mixer.Sound('music/smert.ogg')
+
 
 def mobMovement(tmp):
 	x = 0
@@ -38,6 +44,9 @@ def mobMovement(tmp):
 def mobKiller(tmp):
 	xPl = 0
 	yPl = 0
+	volume = config.PROCENT / 100
+	udar.set_volume(volume)
+	smert.set_volume(volume)
 	for i in range(0, len(tmp)):
 		for j in range(0, len(tmp[i])):
 			if tmp[i][j] == '2':
@@ -49,6 +58,7 @@ def mobKiller(tmp):
 	if tmp[xPl][yPl] == '2' and (tmp[xPl][yPl+1] == '5' or tmp[xPl+1][yPl] == '5' or tmp[xPl][yPl-1] == '5' or tmp[xPl-1][yPl] == '5'):
 		enemyHp = config.enemy['hp'] - 1
 		config.enemy['hp'] = enemyHp
+		openSound(udar)
 		if config.enemy['hp'] == 0 and config.amount == 0:
 			if tmp[xPl][yPl+1] == '5':
 				tmp[xPl][yPl+1] = '0'
@@ -59,6 +69,7 @@ def mobKiller(tmp):
 			elif tmp[xPl-1][yPl] == '5':
 				tmp[xPl-1][yPl] = '0' 
 			config.amount = 1
+			openSound(smert)
 		elif config.amount > 0:
 			config.enemy['hp'] = 2
 			config.amount = 0
