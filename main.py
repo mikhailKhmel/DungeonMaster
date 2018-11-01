@@ -97,6 +97,8 @@ while True:
 				searchChests()
 			elif i.key == pygame.K_SPACE:
 				tmp = maps
+				redMob(tmp,sc)
+				tmp = maps
 				maps = mobKiller(tmp)
 			elif i.key == pygame.K_i:
 				logSystem.blitLog('inv',[False],sc)

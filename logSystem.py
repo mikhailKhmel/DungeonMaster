@@ -11,7 +11,7 @@ GAME_HEIGHT = 576
 GAME_WEIGHT = 576
 
 logmsgGame = ['УРОВЕНЬ: ' + str(config.player['level']) + ' Up - вверх, Right - вправо, Down - вниз, Left - влево',
-				'I - открыть инвентарь']
+				'I - открыть инвентарь', 'SPACE - удар']
 
 logmsgGameAdd = ['E - открыть сундук']
 

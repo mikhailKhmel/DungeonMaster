@@ -2,7 +2,6 @@ import pygame
 import random
 from config import *
 
-
 STEP = 64
 
 WINDOW_HEIGHT = 1024
@@ -19,6 +18,33 @@ surfGame = pygame.Surface((GAME_HEIGHT,GAME_WEIGHT))
 surfGameLight = pygame.Surface((GAME_HEIGHT-4*STEP,GAME_HEIGHT-4*STEP))
 
 surfHp = pygame.Surface((STEP,GAME_WEIGHT))
+surfMob = pygame.Surface((STEP,STEP))
+
+def redMob(maps,sc):
+	x=player['i']
+	y=player['j']
+	surfMob.set_alpha(0)
+	if maps[x-1][y]=='5':
+		img = pygame.image.load('srcBMP/env/light/redMob.bmp')
+		img_rect = img.get_rect(topleft=(STEP*3,STEP*2))
+		surfMob.blit(img,img_rect)
+		sc.blit(surfMob,img_rect)
+	elif maps[x][y-1]=='5':
+		img = pygame.image.load('srcBMP/env/light/redMob.bmp')
+		img_rect = img.get_rect(topleft=(STEP*2,STEP*3))
+		surfMob.blit(img,img_rect)
+		sc.blit(surfMob,img_rect)
+	elif maps[x+1][y]=='5': 
+		img = pygame.image.load('srcBMP/env/light/redMob.bmp')
+		img_rect = img.get_rect(topleft=(STEP*3,STEP*4))
+		surfMob.blit(img,img_rect)
+		sc.blit(surfMob,img_rect)
+	elif maps[x][y+1]=='5':
+		img = pygame.image.load('srcBMP/env/light/redMob.bmp')
+		img_rect = img.get_rect(topleft=(STEP*4,STEP*3))
+		surfMob.blit(img,img_rect)
+		sc.blit(surfMob,img_rect)
+
 
 
 def blitImg(tpe,dark,dx,dy):
