@@ -53,9 +53,12 @@ def blitImg(tpe,dark,dx,dy):
 			img=pygame.image.load(dictEnv[4])
 			img_rect=img.get_rect(topleft=(dx,dy))
 			surfGameLight.blit(img,img_rect)
-		
 		elif tpe=='5':
 			img=pygame.image.load(dictEnv[5])
+			img_rect=img.get_rect(topleft=(dx,dy))
+			surfGameLight.blit(img,img_rect)
+		elif tpe=='a':
+			img=pygame.image.load(dictEnv[10])
 			img_rect=img.get_rect(topleft=(dx,dy))
 			surfGameLight.blit(img,img_rect)
 
@@ -215,7 +218,7 @@ def renderList(dx,dy,level,tmp):
 				y=j
 				break
 
-	if tmp[x+dx][y+dy] == '1' or tmp[x+dx][y+dy] == '4' :
+	if tmp[x+dx][y+dy] == '1' or tmp[x+dx][y+dy] == '4' or tmp[x+dx][y+dy] == 'a' :
 		pass
 	elif tmp[x+dx][y+dy] == '3':
 		player['level']+=1
