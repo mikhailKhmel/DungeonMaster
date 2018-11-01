@@ -19,7 +19,7 @@ surfInv = pygame.Surface((INV_HEIGHT,INV_WEIGHT))
 surfSelect = pygame.Surface((STEP,STEP))
 
 glotok = pygame.mixer.Sound('music/glotok.ogg')
-
+brosok = pygame.mixer.Sound('music/brosok.ogg')
 def loadInv():
 	f = open('inv.txt', 'r')
 	s = f.read()
@@ -107,7 +107,7 @@ def openInv(inv,maps,player,sc):
 				exit()
 			elif i.type == pygame.KEYDOWN:
 				if i.key == pygame.K_i:
-					logSystem.blitLog('inv',[False],sc)
+					logSystem.blitLog('game',[False],sc)
 					surfSelect.set_alpha(0)
 					print(player['arm'],'-',player['type'])
 					renderInv(inv,surfSelect,a,b,sc)
@@ -140,14 +140,14 @@ def openInv(inv,maps,player,sc):
 							inv[3][1] = 'i'
 							player['arm'] = 1
 							refreshPlayer(player)
+						else:
+							logSystem.blitLog('inv',[True],sc)
 					elif inv[a][b] == 'j':
 						if player['arm'] < 2:
 							inv[a][b] = inv[3][1]
 							inv[3][1] = 'j'
 							player['arm'] = 2
 							refreshPlayer(player)
-						else:
-							logSystem.blitLog('inv',[True],sc)
 				#Деекипировка
 				elif i.key == pygame.K_r:
 					if inv[a][b] == '1':
@@ -157,20 +157,28 @@ def openInv(inv,maps,player,sc):
 						refreshPlayer(player)
 				#Уничтожение вещи
 				elif i.key == pygame.K_q:
-					inv[a][b] = '1'
+					if inv[a][b] != '1':
+						volume = config.PROCENT / 100
+						brosok.set_volume(volume)
+						openSound(brosok)
+						inv[a][b] = '1'
 				elif i.key == pygame.K_UP:
+					logSystem.blitLog('inv',[False],sc)
 					a -= 1
 					if a < 5:
 						a = 5
 				elif i.key == pygame.K_RIGHT:
+					logSystem.blitLog('inv',[False],sc)
 					b += 1
 					if b > 5:
 						b = 5
 				elif i.key == pygame.K_DOWN:
+					logSystem.blitLog('inv',[False],sc)
 					a += 1
 					if a > 7:
 						a = 7
 				elif i.key == pygame.K_LEFT:
+					logSystem.blitLog('inv',[False],sc)
 					b -= 1
 					if b < 1:
 						b = 1
