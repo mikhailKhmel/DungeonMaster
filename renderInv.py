@@ -128,11 +128,13 @@ def openInv(inv,maps,player,sc):
 						inv[a][b] = inv[1][1]
 						inv[1][1] = 'd'
 						player['type'] = 1
+						player['power'] = 1
 						refreshPlayer(player)
 					elif inv[a][b] == 'e':
 						inv[a][b] = inv[1][1]
 						inv[1][1] = 'e'
 						player['type'] = 2
+						player['power'] = 2
 						refreshPlayer(player)
 					#Замена брони
 					elif inv[a][b] == 'i':
@@ -155,6 +157,7 @@ def openInv(inv,maps,player,sc):
 						inv[a][b] = inv[1][1]
 						inv[1][1] = '1'
 						player['type'] = 0
+						player['power'] = 0
 						refreshPlayer(player)
 				#Уничтожение вещи
 				elif i.key == pygame.K_q:

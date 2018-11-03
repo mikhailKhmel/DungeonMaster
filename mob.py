@@ -28,7 +28,7 @@ def mobMovement(tmp):
 	elif tmp[x+dx][y+dy] == '3':
 		pass
 	elif tmp[x][y] == '5' and (tmp[x][y+1] == '2' or tmp[x+1][y] == '2' or tmp[x][y-1] == '2' or tmp[x-1][y] == '2'):
-		playerHp = config.player['hp'] - 1
+		playerHp = config.player['hp'] + config.player['arm'] - 1
 		config.player['hp'] = playerHp
 	elif tmp[x+dx][y+dy] == '2':
 		pass
@@ -56,7 +56,7 @@ def mobKiller(tmp):
 				xMob = i
 				yMob = j
 	if tmp[xPl][yPl] == '2' and (tmp[xPl][yPl+1] == '5' or tmp[xPl+1][yPl] == '5' or tmp[xPl][yPl-1] == '5' or tmp[xPl-1][yPl] == '5'):
-		enemyHp = config.enemy['hp'] - 1
+		enemyHp = config.enemy['hp'] - config.player['power']
 		config.enemy['hp'] = enemyHp
 		openSound(udar)
 		if config.enemy['hp'] == 0 and config.amount == 0:
