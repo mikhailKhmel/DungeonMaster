@@ -10,7 +10,7 @@ from menu import *
 from music import *
 
 # здесь определяются константы, классы и функции
-FPS = 30
+FPS = 20
 STEP = 64
 PROC = 100
 
@@ -61,7 +61,7 @@ while True:
 	
     # задержка
 	clock.tick(FPS)
-	
+	redM=False
     # цикл обработки событий
 	for i in pygame.event.get():
 		if i.type == pygame.QUIT:
@@ -96,8 +96,9 @@ while True:
 				print(player['hp'])
 				searchChests()
 			elif i.key == pygame.K_SPACE:
-				tmp = maps
-				redMob(tmp,sc)
+				
+				redM=True
+				
 				tmp = maps
 				maps = mobKiller(tmp)
 			elif i.key == pygame.K_i:
@@ -115,8 +116,12 @@ while True:
 			else:
 				print('ERROR KEY')
 			searchChests()
+	if redM==False:
+		renderMap(maps,sc)
+	else:
+		tmp = maps
+		redMob(redM,tmp,sc)
 
-	renderMap(maps,sc)
 	renderInv(inv,surfSelect,0,0,sc)
 	
 	# обновление экрана

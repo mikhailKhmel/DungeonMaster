@@ -20,47 +20,9 @@ surfGameLight = pygame.Surface((GAME_HEIGHT-4*STEP,GAME_HEIGHT-4*STEP))
 surfHp = pygame.Surface((STEP,GAME_WEIGHT))
 surfMob = pygame.Surface((STEP,STEP))
 
-def redMob(maps,sc):
-	x=player['i']
-	y=player['j']
-	surfMob.set_alpha(0)
-	dx=0
-	dy=0
-	for i in range(x-1,x+2):
-		for j in range(y-1,y+2):
-			if maps[i][j]=='5':
-				dx=i
-				dy=j
-				print('dx=',dx,'\tdy=',dy)
-			break
-		
-	# if maps[x-1][y]=='5':
-	# 	img = pygame.image.load('srcBMP/env/light/redMob.bmp')
-	# 	img_rect = img.get_rect(topleft=(0,0))
-	# 	surfMob.blit(img,(0,0))
-	# 	surfGameLight.blit(surfMob,(STEP,0))
-	# elif maps[x][y-1]=='5':
-	# 	img = pygame.image.load('srcBMP/env/light/redMob.bmp')
-	# 	img_rect = img.get_rect(topleft=(0,STEP))
-	# 	surfMob.blit(img,(0,0))
-	# 	surfGameLight.blit(surfMob,(STEP*2,STEP*3))
-	# elif maps[x+1][y]=='5': 
-	# 	img = pygame.image.load('srcBMP/env/light/redMob.bmp')
-	# 	img_rect = img.get_rect(topleft=(STEP*2,STEP))
-	# 	surfMob.blit(img,(0,0))
-	# 	surfGameLight.blit(surfMob,(STEP*3,STEP*4))
-	# elif maps[x][y+1]=='5':
-	# 	img = pygame.image.load('srcBMP/env/light/redMob.bmp')
-	# 	img_rect = img.get_rect(topleft=(0,0))
-	# 	surfMob.blit(img,(0,0))
-	# 	surfGameLight.blit(surfMob,(STEP,STEP*2))
-
-	# sc.blit(surfGameLight,(STEP*2,STEP*2))
-
 
 
 def blitImg(tpe,dark,dx,dy):
-
 	if dark==True:
 		if tpe=='1':
 			img=pygame.image.load(dictEnv[1]+'/dark/tipo_stena.bmp')
@@ -270,3 +232,32 @@ def renderList(dx,dy,level,tmp):
 		player['j'] = y+dy
 
 	return tmp
+
+def redMob(hit,maps,sc):
+	x=player['i']
+	y=player['j']
+	surfMob.set_alpha(0)
+	surfMob.fill((0,0,0))
+	dx=0
+	dy=0
+	if maps[x-1][y]=='5':
+		dx=STEP*4
+		dy=STEP*3
+	elif maps[x][y-1]=='5':
+		dx=STEP*3
+		dy=STEP*4
+	elif maps[x+1][y]=='5': 
+		dx=STEP*4
+		dy=STEP*5
+	elif maps[x][y+1]=='5':
+		dx=STEP*5
+		dy=STEP*4
+	print('dx=',dx,'\tdy=',dy)
+	if dx==0 and dy==0:
+		return
+	elif hit==True:
+		img=pygame.image.load('srcBMP/env/light/redMob.bmp')
+		img_rect=img.get_rect(topleft=(dx,dy))
+		sc.blit(img,img_rect)
+	else:
+		#здесь алгоритм прорисовки хп у рядом стоящего моба
