@@ -101,6 +101,7 @@ while True:
 				maps = mobKiller(tmp)
 			elif i.key == pygame.K_i:
 				openInv(inv,maps,player, sc)
+				searchChests()
 			elif i.key == pygame.K_ESCAPE:
 				openMenu(punkt = 0)
 				sc.fill((0,0,0))

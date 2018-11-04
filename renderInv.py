@@ -98,6 +98,7 @@ def renderInv(inv,surfSelect,a,b,sc):
 	sc.blit(surfInv,(GAME_HEIGHT,0))
 
 def openInv(inv,maps,player,sc):
+	logSystem.blitLog('inv',[],sc)
 	a = 5
 	b = 1
 	surfSelect.set_alpha(127)
