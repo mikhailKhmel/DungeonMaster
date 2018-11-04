@@ -17,6 +17,7 @@ INV_WEIGHT = GAME_WEIGHT
 
 surfInv = pygame.Surface((INV_HEIGHT,INV_WEIGHT))
 surfSelect = pygame.Surface((STEP,STEP))
+surfInvlog = pygame.Surface((3*STEP, 3*STEP))
 
 glotok = pygame.mixer.Sound('music/glotok.ogg')
 brosok = pygame.mixer.Sound('music/brosok.ogg')
@@ -54,11 +55,11 @@ def renderInv(inv,surfSelect,a,b,sc):
 				img_rect = img.get_rect(topleft=(x,y))
 				surfInv.blit(img,img_rect)
 				x+=STEP
-			elif inv[i][j]=='2':
-				img = pygame.image.load('srcBMP/inv/statbg.bmp')
-				img_rect = img.get_rect(topleft=(x,y))
-				surfInv.blit(img,img_rect)
-				x+=STEP
+#			elif inv[i][j]=='2':
+#				img = pygame.image.load('srcBMP/inv/statbg.bmp')
+#				img_rect = img.get_rect(topleft=(x,y))
+#				surfInv.blit(img,img_rect)
+#				x+=STEP
 			elif inv[i][j]=='a':
 				img = pygame.image.load('srcBMP/inv/invpotion.bmp')
 				img_rect = img.get_rect(topleft=(x,y))
@@ -74,11 +75,11 @@ def renderInv(inv,surfSelect,a,b,sc):
 				img_rect = img.get_rect(topleft=(x,y))
 				surfInv.blit(img,img_rect)
 				x+=STEP
-			elif inv[i][j]=='h':
-				img = pygame.image.load('srcBMP/inv/invarmour0.bmp')
-				img_rect = img.get_rect(topleft=(x,y))
-				surfInv.blit(img,img_rect)
-				x+=STEP
+#			elif inv[i][j]=='h':
+#				img = pygame.image.load('srcBMP/inv/invarmour0.bmp')
+#				img_rect = img.get_rect(topleft=(x,y))
+#				surfInv.blit(img,img_rect)
+#				x+=STEP
 			elif inv[i][j]=='i':
 				img = pygame.image.load('srcBMP/inv/invarmour1.bmp')
 				img_rect = img.get_rect(topleft=(x,y))
@@ -95,6 +96,17 @@ def renderInv(inv,surfSelect,a,b,sc):
 	img_rect = img.get_rect(topleft=(a*STEP,b*STEP))
 	surfSelect.blit(img,img_rect)
 	surfInv.blit(surfSelect,(b*STEP,a*STEP))
+	img = pygame.image.load('srcBMP/inv/statbg.bmp')
+	img_rect = img.get_rect(topleft=(a*3*STEP,b*3*STEP))
+	surfInvlog.blit(img,img_rect)
+	x = 5
+	invlogmsg = ['Уровень брони: '+str(config.player['arm'])+'','Здесь могла бы', 'быть ваша', 'реклама']
+	for s in invlogmsg:
+		font = pygame.font.SysFont('verdana',20)
+		text = font.render(s, 1, (0,0,0))
+		surfInvlog.blit(text,(5,x))
+		x+=20
+	surfInv.blit(surfInvlog, (3*STEP, STEP))
 	sc.blit(surfInv,(GAME_HEIGHT,0))
 
 def openInv(inv,maps,player,sc):
@@ -110,7 +122,6 @@ def openInv(inv,maps,player,sc):
 			elif i.type == pygame.KEYDOWN:
 				if i.key == pygame.K_i:
 					surfSelect.set_alpha(0)
-					print(player['arm'],'-',player['type'])
 					renderInv(inv,surfSelect,a,b,sc)
 					return
 				elif i.key == pygame.K_e:
@@ -167,22 +178,18 @@ def openInv(inv,maps,player,sc):
 						openSound(brosok)
 						inv[a][b] = '1'
 				elif i.key == pygame.K_UP:
-					
 					a -= 1
 					if a < 5:
 						a = 5
-				elif i.key == pygame.K_RIGHT:
-					
+				elif i.key == pygame.K_RIGHT:	
 					b += 1
 					if b > 5:
 						b = 5
 				elif i.key == pygame.K_DOWN:
-					
 					a += 1
 					if a > 7:
 						a = 7
 				elif i.key == pygame.K_LEFT:
-					
 					b -= 1
 					if b < 1:
 						b = 1
@@ -194,7 +201,6 @@ def openInv(inv,maps,player,sc):
 		
 def refreshPlayer(player):
 	dictEnv[2] = 'srcBMP/player/player'+str(player['arm'])+str(player['type'])+'.bmp'
-
 def openChest(inv,maps,sc):
 	x = player['i']
 	y = player['j']
