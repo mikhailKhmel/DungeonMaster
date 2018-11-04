@@ -36,9 +36,9 @@ def searchChests():
 	x = player['i']
 	y = player['j']
 	if maps[x-1][y-1]=='4' or maps[x-1][y]=='4' or maps[x][y-1]=='4' or maps[x+1][y+1]=='4' or maps[x][y+1]=='4' or maps[x+1][y] == '4' or maps[x+1][y-1] == '4' or maps[x-1][y+1]=='4':
-		logSystem.blitLog('game',[True],sc)
+		logSystem.blitLog('game',[0],sc)
 	else:
-		logSystem.blitLog('game',[False],sc)
+		logSystem.blitLog('game',[],sc)
 	
 
 # если надо до цикла отобразить объекты на экране
@@ -52,7 +52,7 @@ inv = loadInv()
 surfSelect.set_alpha(0)
 renderInv(inv,surfSelect,0,0,sc)
 
-logSystem.blitLog('game',[False],sc)
+logSystem.blitLog('game',[],sc)
 
 pygame.display.update()
  
@@ -96,13 +96,10 @@ while True:
 				print(player['hp'])
 				searchChests()
 			elif i.key == pygame.K_SPACE:
-				
 				redM=True
-				
 				tmp = maps
 				maps = mobKiller(tmp)
 			elif i.key == pygame.K_i:
-				logSystem.blitLog('inv',[False],sc)
 				openInv(inv,maps,player, sc)
 			elif i.key == pygame.K_ESCAPE:
 				openMenu(punkt = 0)
@@ -112,10 +109,10 @@ while True:
 				renderInv(inv,surfSelect,0,0,sc)
 
 			elif i.key == pygame.K_e:
-				openChest(inv,maps)
+				openChest(inv,maps,sc)
 			else:
 				print('ERROR KEY')
-			searchChests()
+			#searchChests()
 	if redM==False:
 		renderMap(maps,sc)
 	else:
