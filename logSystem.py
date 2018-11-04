@@ -13,7 +13,10 @@ GAME_WEIGHT = 576
 logmsgGame = ['УРОВЕНЬ: ' + str(config.player['level']) + ' Up - вверх, Right - вправо, Down - вниз, Left - влево',
 				'I - открыть инвентарь', 'SPACE - удар']
 
-logmsgGameAdd = ['E - открыть сундук']
+logmsgGameAdd = ['E - открыть сундук', 'Вы перегружены','Лечебное зелье добавлено в сумку',
+'Меч добавлен в сумку',
+'Копье и щит добавлены в сумку',
+'Кожаная броня добавлена в сумку','Стальная броня добавлена в сумку']
 
 logmsgInv = ['E - Экипировать или использовать',
 				'R - снять оружие',
@@ -36,14 +39,13 @@ def blitLog(t,addition,sc):
 			text = font.render(s, 1, (255,255,255))
 			surfLog.blit(text,(0,x))
 			x+=20
-		i=0
-		for s in addition:
-			if s == True:
-				font = pygame.font.SysFont('arial',20)
-				text = font.render(logmsgGameAdd[i],1,(255,255,255))
-				surfLog.blit(text,(0,x))
-				x+=20
-				i+=1
+		
+		for i in addition:
+			print('i=',i)
+			font = pygame.font.SysFont('arial',20)
+			text = font.render(logmsgGameAdd[i],1,(255,255,255))
+			surfLog.blit(text,(0,x))
+			x+=20
 		sc.blit(surfLog,(0,GAME_HEIGHT+STEP))
 		return
 	elif t == 'inv':
@@ -53,14 +55,12 @@ def blitLog(t,addition,sc):
 			text = font.render(s, 1, (255,255,255))
 			surfLog.blit(text,(0,x))
 			x+=20
-		i=0
-		for s in addition:
-			if s == True:
-				font = pygame.font.SysFont('arial',20)
-				text = font.render(logmsgInvAdd[i],1,(255,255,255))
-				surfLog.blit(text,(0,x))
-				x+=20
-				i+=1
+		for i in addition:
+			print('i=',i)
+			font = pygame.font.SysFont('arial',20)
+			text = font.render(logmsgInvAdd[i],1,(255,255,255))
+			surfLog.blit(text,(0,x))
+			x+=20
 		sc.blit(surfLog,(0,GAME_HEIGHT+STEP))
 		return
 	

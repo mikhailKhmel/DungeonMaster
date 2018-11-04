@@ -260,4 +260,5 @@ def redMob(hit,maps,sc):
 		img_rect=img.get_rect(topleft=(dx,dy))
 		sc.blit(img,img_rect)
 	else:
+		pass
 		#здесь алгоритм прорисовки хп у рядом стоящего моба

@@ -108,7 +108,6 @@ def openInv(inv,maps,player,sc):
 				exit()
 			elif i.type == pygame.KEYDOWN:
 				if i.key == pygame.K_i:
-					logSystem.blitLog('game',[False],sc)
 					surfSelect.set_alpha(0)
 					print(player['arm'],'-',player['type'])
 					renderInv(inv,surfSelect,a,b,sc)
@@ -142,7 +141,7 @@ def openInv(inv,maps,player,sc):
 							player['arm'] = 1
 							refreshPlayer(player)
 						else:
-							logSystem.blitLog('inv',[True],sc)
+							logSystem.blitLog('inv',[0],sc)
 					elif inv[a][b] == 'j':
 						if player['arm'] < 2:
 							inv[a][b] = inv[3][1]
@@ -164,22 +163,22 @@ def openInv(inv,maps,player,sc):
 						openSound(brosok)
 						inv[a][b] = '1'
 				elif i.key == pygame.K_UP:
-					logSystem.blitLog('inv',[False],sc)
+					
 					a -= 1
 					if a < 5:
 						a = 5
 				elif i.key == pygame.K_RIGHT:
-					logSystem.blitLog('inv',[False],sc)
+					
 					b += 1
 					if b > 5:
 						b = 5
 				elif i.key == pygame.K_DOWN:
-					logSystem.blitLog('inv',[False],sc)
+					
 					a += 1
 					if a > 7:
 						a = 7
 				elif i.key == pygame.K_LEFT:
-					logSystem.blitLog('inv',[False],sc)
+					
 					b -= 1
 					if b < 1:
 						b = 1
@@ -192,7 +191,7 @@ def openInv(inv,maps,player,sc):
 def refreshPlayer(player):
 	dictEnv[2] = 'srcBMP/player/player'+str(player['arm'])+str(player['type'])+'.bmp'
 
-def openChest(inv,maps):
+def openChest(inv,maps,sc):
 	x = player['i']
 	y = player['j']
 	if maps[x-1][y-1]=='4' or maps[x-1][y]=='4' or maps[x][y-1]=='4' or maps[x+1][y+1]=='4' or maps[x][y+1]=='4' or maps[x+1][y] == '4' or maps[x+1][y-1] == '4' or maps[x-1][y+1]=='4':
@@ -202,28 +201,34 @@ def openChest(inv,maps):
 					for a in range(5, len(inv)):
 						for b in range(0, len(inv[a])):
 							if inv[a][b]=='1':
-								addItem(inv,a,b)
+								addItem(inv,a,b,sc)
 								maps[i][j]='a'
 								return
 					print('You are overencumbered')
+					logSystem.blitLog('game',[1],sc)
 					return
 	else:
 		print('No chest nearby')
 	
-def addItem(inv,x,y):
+def addItem(inv,x,y,sc):
 	c=random.randint(1,10)
 	if c<7:
 		inv[x][y]='a'
 		print('Potion added')
+		logSystem.blitLog('game',[2],sc)
 	elif c==7:
 		inv[x][y]='d'
 		print('Sword added')
+		logSystem.blitLog('game',[3],sc)
 	elif c==8:
 		inv[x][y]='e'
 		print('Spear & shield added')
+		logSystem.blitLog('game',[4],sc)
 	elif c==9:
 		inv[x][y]='i'
 		print('Leather armour added')
+		logSystem.blitLog('game',[5],sc)
 	elif c==10:
 		inv[x][y]='j'
 		print('Steel armour added')
+		logSystem.blitLog('game',[6],sc)
