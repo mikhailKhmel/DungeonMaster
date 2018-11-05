@@ -30,6 +30,8 @@ sc.fill((0,0,0))
 
 # Настройка звука
 mainMusic = 'music/main.mp3'
+volume = config.PROCENT / 100
+pygame.mixer.music.set_volume(volume)
 openMusic(mainMusic)
 
 def searchChests():
@@ -102,13 +104,19 @@ while True:
 			elif i.key == pygame.K_i:
 				openInv(inv,maps,player, sc)
 				searchChests()
+			elif i.key == pygame.K_m:
+				if config.music == True:
+					pygame.mixer.music.pause()
+					config.music = False
+				elif config.music == False:
+					pygame.mixer.music.unpause()
+					config.music = True
 			elif i.key == pygame.K_ESCAPE:
 				openMenu(punkt = 0)
 				sc.fill((0,0,0))
 				renderMap(maps,sc)
 				surfSelect.set_alpha(0)
 				renderInv(inv,surfSelect,0,0,sc)
-
 			elif i.key == pygame.K_e:
 				openChest(inv,maps,sc)
 			else:
