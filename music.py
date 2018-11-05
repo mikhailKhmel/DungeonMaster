@@ -1,4 +1,5 @@
 import pygame
+import config
 
 pygame.mixer.init()
 clock = pygame.time.Clock()
@@ -8,4 +9,5 @@ def openMusic(file):
 	pygame.mixer.music.play(-1, 0.0)
 
 def openSound(audio):
-	audio.play()
+	if config.music == True:
+		audio.play()
