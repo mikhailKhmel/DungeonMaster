@@ -96,14 +96,15 @@ def renderInv(inv,surfSelect,a,b,sc):
 	img_rect = img.get_rect(topleft=(a*STEP,b*STEP))
 	surfSelect.blit(img,img_rect)
 	surfInv.blit(surfSelect,(b*STEP,a*STEP))
-	img = pygame.image.load('srcBMP/inv/statbg.bmp')
-	img_rect = img.get_rect(topleft=(a*3*STEP,b*3*STEP))
-	surfInvlog.blit(img,img_rect)
+#	img = pygame.image.load('srcBMP/inv/statbg.bmp')
+#	img_rect = img.get_rect(topleft=(a*3*STEP,b*3*STEP))
+#	surfInvlog.blit(img,img_rect)
+	surfInvlog.fill((78,78,78))
 	x = 5
-	invlogmsg = ['Уровень брони: '+str(config.player['arm'])+'','Здесь могла бы', 'быть ваша', 'реклама']
+	invlogmsg = ['Уровень брони: '+str(config.player['arm']), 'Сила: '+str(config.player['power']),'Здесь могла бы', 'быть ваша', 'реклама']
 	for s in invlogmsg:
 		font = pygame.font.SysFont('verdana',20)
-		text = font.render(s, 1, (0,0,0))
+		text = font.render(s, 1, (255,255,255))
 		surfInvlog.blit(text,(5,x))
 		x+=20
 	surfInv.blit(surfInvlog, (3*STEP, STEP))
@@ -139,13 +140,13 @@ def openInv(inv,maps,player,sc):
 						inv[a][b] = inv[1][1]
 						inv[1][1] = 'd'
 						player['type'] = 1
-						player['power'] = 1
+						player['power'] = 2
 						refreshPlayer(player)
 					elif inv[a][b] == 'e':
 						inv[a][b] = inv[1][1]
 						inv[1][1] = 'e'
 						player['type'] = 2
-						player['power'] = 2
+						player['power'] = 1
 						refreshPlayer(player)
 					#Замена брони
 					elif inv[a][b] == 'i':
@@ -168,7 +169,7 @@ def openInv(inv,maps,player,sc):
 						inv[a][b] = inv[1][1]
 						inv[1][1] = '1'
 						player['type'] = 0
-						player['power'] = 0
+						player['power'] = 0.5
 						refreshPlayer(player)
 				#Уничтожение вещи
 				elif i.key == pygame.K_q:
@@ -201,6 +202,7 @@ def openInv(inv,maps,player,sc):
 		
 def refreshPlayer(player):
 	dictEnv[2] = 'srcBMP/player/player'+str(player['arm'])+str(player['type'])+'.bmp'
+	
 def openChest(inv,maps,sc):
 	x = player['i']
 	y = player['j']
