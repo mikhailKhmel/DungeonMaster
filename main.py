@@ -37,7 +37,7 @@ openMusic(mainMusic)
 def searchChests():
 	x = player['i']
 	y = player['j']
-	if maps[x-1][y-1]=='4' or maps[x-1][y]=='4' or maps[x][y-1]=='4' or maps[x+1][y+1]=='4' or maps[x][y+1]=='4' or maps[x+1][y] == '4' or maps[x+1][y-1] == '4' or maps[x-1][y+1]=='4':
+	if maps[x-1][y]=='4' or maps[x][y-1]=='4' or maps[x][y+1]=='4' or maps[x+1][y] == '4':
 		logSystem.blitLog('game',[0],sc)
 	else:
 		logSystem.blitLog('game',[],sc)
@@ -69,6 +69,17 @@ while True:
 		if i.type == pygame.QUIT:
 			exit()
 		elif i.type == pygame.KEYDOWN:
+			if config.player['hp'] <= 0:
+				config.dead=True
+				openMenu(punkt = 0)
+				config.player['level']=1
+				config.player['hp'] = 6
+				sc.fill((0,0,0))
+				maps = loadMap()
+				renderMap(maps,sc)
+				logSystem.blitLog('game',[],sc)
+				config.dead=False
+				break
 			if i.key == pygame.K_UP:
 				tmp = maps
 				maps = renderList(-1,0,level,tmp)
@@ -122,7 +133,7 @@ while True:
 				openChest(inv,maps,sc)
 			else:
 				print('ERROR KEY')
-			#searchChests()
+
 	if redM==False:
 		renderMap(maps,sc)
 	else:

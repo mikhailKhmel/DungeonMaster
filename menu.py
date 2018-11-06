@@ -1,12 +1,14 @@
 import pygame
 import sys
+import random
 from music import *
 import config
 
+MENU = random.randint(1,4)
 window = pygame.display.set_mode((1024, 800))
 pygame.display.set_caption('DungeonMaster')
 screen = pygame.Surface((1024, 800))
-image_menu = pygame.image.load('srcBMP/menu/'+str(config.MENU)+'.bmp')
+image_menu = ''
 
 
 def openMenu(punkt):
@@ -30,6 +32,10 @@ class Menu:
 		font_menu = pygame.font.SysFont("arial", 50)
 		pygame.key.set_repeat(0,0)
 		pygame.mouse.set_visible(True)
+		if config.dead == False:
+			image_menu = pygame.image.load('srcBMP/menu/'+str(MENU)+'.bmp')
+		else:
+			image_menu = pygame.image.load('srcBMP/menu/gameover.jpg')
 		while done:
 			screen.blit(image_menu,(0,0))
 			mp = pygame.mouse.get_pos()
