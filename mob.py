@@ -7,37 +7,41 @@ from music import *
 udar = pygame.mixer.Sound('music/udar.ogg')
 smert = pygame.mixer.Sound('music/smert.ogg')
 
-
 def mobMovement(tmp):
-	x = 0
-	y = 0
-	dx = random.randint(-1,1)
-	dy = random.randint(-1,1)
-	if (dx == -1 or dx == 1):
-		dy = 0
-	else:
-		dx = 0 
-	for i in range(0, len(tmp)):
-		for j in range(0, len(tmp[i])):
-			if tmp[i][j] == '5':
-				x = i
-				y = j
-				break
-	if tmp[x+dx][y+dy] == '1' or tmp[x+dx][y+dy] == '4' :
-		pass
-	elif tmp[x+dx][y+dy] == '3':
-		pass
-	elif tmp[x][y] == '5' and (tmp[x][y+1] == '2' or tmp[x+1][y] == '2' or tmp[x][y-1] == '2' or tmp[x-1][y] == '2'):
-		playerHp = config.player['hp'] + config.player['arm'] - 1
-		config.player['hp'] = playerHp
-	elif tmp[x+dx][y+dy] == '2':
-		pass
-	else:
-		tmp[x][y]='0'
-		tmp[x+dx][y+dy]='5'
-		config.enemy['i'] = x+dx
-		config.enemy['j'] = y+dy
+	print('count of mobs =',len(config.mobs))
 
+
+	for c in range(0,len(config.mobs)):
+		playerNearby=False
+		x = config.mobs[c]['i']
+		y = config.mobs[c]['j']
+		for i in range(x-2,x+2):
+			for j in range(y-2,y+2):
+				if tmp[i][j]=='2':
+					playerNearby=True
+
+		if playerNearby==False:
+			dx=random.randint(-1,1)
+			dy=random.randint(-1,1)
+			if dx==0:
+				dy=random.choice([-1,1])
+			else:
+				dy=0
+			if tmp[x+dx][y+dy]=='1' or tmp[x+dx][y+dy]=='4' or tmp[x+dx][y+dy]=='a' or tmp[x+dx][y+dy]=='3': 
+				pass
+			elif tmp[x+dx][y+dy]=='2':
+				#алгоритм нанесения урона игроку
+			else:
+				tmp[x+dx][y+dy]='5'
+				tmp[x][y]='0'
+				config.mobs[c]['i']=x + dx
+				config.mobs[c]['j']=y + dy
+		else:
+			#алгоритм приближения моба к игроку
+
+
+
+	print(config.mobs)
 	return tmp		
 
 
@@ -77,3 +81,16 @@ def mobKiller(tmp):
 	print(config.enemy['hp'])
 
 	return tmp	
+
+def scanMobs(maps):
+	c=0
+	for i in range(0,len(maps)):
+		for j in range(0,len(maps[i])):
+			if maps[i][j]=='5':
+				hp = random.randint(2,4)
+				power = random.choice([0.0,0.5,1.0,1.5,2.0])
+				mob = {'id':c,'hp':hp,'power':power,'i':i,'j':j}
+				config.mobs.append(mob)
+				c+=1
+
+	print(config.mobs)

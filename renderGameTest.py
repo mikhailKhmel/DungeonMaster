@@ -218,13 +218,11 @@ def renderList(dx,dy,level,tmp):
 				y=j
 				break
 
-	if tmp[x+dx][y+dy] == '1' or tmp[x+dx][y+dy] == '4' or tmp[x+dx][y+dy] == 'a' :
+	if tmp[x+dx][y+dy] == '1' or tmp[x+dx][y+dy] == '4' or tmp[x+dx][y+dy] == 'a' or tmp[x+dx][y+dy] == '5':
 		pass
 	elif tmp[x+dx][y+dy] == '3':
 		player['level']+=1
 		tmp=loadMap()
-	elif tmp[x+dx][y+dy] == '5':
-		pass
 	else:
 		tmp[x][y]='0'
 		tmp[x+dx][y+dy]='2'

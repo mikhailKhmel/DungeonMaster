@@ -48,6 +48,7 @@ menu = openMenu(punkt = 0)
 sc.fill((0,0,0))
 
 maps = loadMap()
+scanMobs(maps)
 renderMap(maps,sc)
 
 inv = loadInv()
@@ -85,28 +86,25 @@ while True:
 				maps = renderList(-1,0,level,tmp)
 				tmp = maps
 				maps = mobMovement(tmp)
-				print(player['hp'])
+
 				searchChests()
 			elif i.key == pygame.K_RIGHT:
 				tmp = maps
 				maps = renderList(0,1,level,tmp)
 				tmp = maps
 				maps = mobMovement(tmp)
-				print(player['hp'])
 				searchChests()
 			elif i.key == pygame.K_DOWN:
 				tmp = maps
 				maps = renderList(1,0,level,tmp)
 				tmp = maps
 				maps = mobMovement(tmp)
-				print(player['hp'])
 				searchChests()
 			elif i.key == pygame.K_LEFT:
 				tmp = maps
 				maps = renderList(0,-1,level,tmp)
 				tmp = maps
 				maps = mobMovement(tmp)
-				print(player['hp'])
 				searchChests()
 			elif i.key == pygame.K_SPACE:
 				redM=True
