@@ -117,6 +117,7 @@ while True:
 				renderMap(maps,sc)
 				surfSelect.set_alpha(0)
 				renderInv(inv,surfSelect,0,0,sc)
+				logSystem.blitLog('game',[],sc)
 			elif i.key == pygame.K_e:
 				openChest(inv,maps,sc)
 			else:
