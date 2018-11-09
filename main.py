@@ -48,7 +48,7 @@ menu = openMenu(punkt = 0)
 sc.fill((0,0,0))
 
 maps = loadMap()
-scanMobs(maps)
+scanMobs(maps) #функция сканирования карты для поисков мобов и установки их первоначальных параметров
 renderMap(maps,sc)
 
 inv = loadInv()
@@ -147,8 +147,8 @@ while True:
 			# 	logSystem.blitLog('game',[],sc)
 				
 			# 	break
-	if dead==True:
-		maps = loadMap()
+	if dead==True: 						#это и то, что закомментировано сверху - это попытки сделать рестарт игры
+		maps = loadMap()				#config.dead - это флаг, по которому в menu.py выбирается задний фон
 		inv = loadInv()
 		player = {'level': 1, 'type': 0, 'i':0, 'j':0, 'hp':6, 'arm':0, 'power':0.5}
 		mobs.clear()
@@ -157,7 +157,7 @@ while True:
 		surfSelect.set_alpha(0)
 		renderInv(inv,surfSelect,0,0,sc)
 		refreshPlayer(player)
-		renderHP(sc)
+		renderHP(sc)					#отдельно вывел функцию в renderGameTest.py для отрисовки сердечек
 		renderMap(maps,sc)
 
 		sc.fill((0,0,0))
