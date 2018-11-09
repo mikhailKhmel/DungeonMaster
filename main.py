@@ -65,22 +65,17 @@ while True:
     # задержка
 	clock.tick(FPS)
 	redM=False
+	dead=False
     # цикл обработки событий
 	for i in pygame.event.get():
 		if i.type == pygame.QUIT:
 			exit()
 		elif i.type == pygame.KEYDOWN:
-			if config.player['hp'] <= 0:
-				config.dead=True
+			if player['hp'] <= 0:
+				dead=True
 				openMenu(punkt = 0)
-				config.player['level']=1
-				config.player['hp'] = 6
-				sc.fill((0,0,0))
-				maps = loadMap()
-				renderMap(maps,sc)
-				logSystem.blitLog('game',[],sc)
-				config.dead=False
 				break
+
 			if i.key == pygame.K_UP:
 				tmp = maps
 				maps = renderList(-1,0,level,tmp)
@@ -107,9 +102,8 @@ while True:
 				maps = mobMovement(tmp)
 				searchChests()
 			elif i.key == pygame.K_SPACE:
-				redM=True
 				tmp = maps
-				maps = mobKiller(tmp)
+				maps,redM=mobKiller(tmp)
 			elif i.key == pygame.K_i:
 				openInv(inv,maps,player, sc)
 				searchChests()
@@ -132,6 +126,46 @@ while True:
 			else:
 				print('ERROR KEY')
 
+			# if config.player['hp'] <= 0:
+			# 	config.dead=True
+			# 	openMenu(punkt = 0)
+			# 	config.dead=False
+
+			# 	maps = loadMap()
+			# 	renderMap(maps,sc)
+			# 	config.player = {'level': 1, 'type': 0, 'i':0, 'j':0, 'hp':6, 'arm':0, 'power':0.5}
+			# 	scanMobs(maps)
+
+			# 	inv = loadInv()
+			# 	surfSelect.set_alpha(0)
+			# 	renderInv(inv,surfSelect,0,0,sc)
+
+			# 	sc.fill((0,0,0))
+				
+			# 	redM=False
+
+			# 	logSystem.blitLog('game',[],sc)
+				
+			# 	break
+	if dead==True:
+		maps = loadMap()
+		inv = loadInv()
+		player = {'level': 1, 'type': 0, 'i':0, 'j':0, 'hp':6, 'arm':0, 'power':0.5}
+		mobs.clear()
+		scanMobs(maps)
+		
+		surfSelect.set_alpha(0)
+		renderInv(inv,surfSelect,0,0,sc)
+		refreshPlayer(player)
+		renderHP(sc)
+		renderMap(maps,sc)
+
+		sc.fill((0,0,0))
+
+		logSystem.blitLog('game',[],sc)
+		dead=False
+		continue
+
 	if redM==False:
 		renderMap(maps,sc)
 	else:
@@ -139,6 +173,6 @@ while True:
 		redMob(redM,tmp,sc)
 
 	renderInv(inv,surfSelect,0,0,sc)
-	
+	renderHP(sc)
 	# обновление экрана
 	pygame.display.update()

@@ -182,6 +182,8 @@ def renderMap(maps,sc):
 		y+=STEP
 
 	sc.blit(surfGameLight,(STEP*2,STEP*2))
+
+def renderHP(sc):
 	hp=[]
 	if player['hp'] == 6: 
 		hp=[2,2,2]
