@@ -6,6 +6,7 @@ from renderGameTest import *
 from renderInv import *
 from mob import *
 from config import *
+import config
 from menu import *
 from music import *
 
@@ -35,8 +36,8 @@ pygame.mixer.music.set_volume(volume)
 openMusic(mainMusic)
 
 def searchChests():
-	x = player['i']
-	y = player['j']
+	x = config.player['i']
+	y = config.player['j']
 	if maps[x-1][y]=='4' or maps[x][y-1]=='4' or maps[x][y+1]=='4' or maps[x+1][y] == '4':
 		logSystem.blitLog('game',[0],sc)
 	else:
@@ -71,17 +72,15 @@ while True:
 		if i.type == pygame.QUIT:
 			exit()
 		elif i.type == pygame.KEYDOWN:
-			if player['hp'] <= 0:
+			if config.player['hp'] <= 0:
 				dead=True
 				openMenu(punkt = 0)
 				break
-
 			if i.key == pygame.K_UP:
 				tmp = maps
 				maps = renderList(-1,0,level,tmp)
 				tmp = maps
 				maps = mobMovement(tmp)
-
 				searchChests()
 			elif i.key == pygame.K_RIGHT:
 				tmp = maps
@@ -105,7 +104,7 @@ while True:
 				tmp = maps
 				maps,redM=mobKiller(tmp)
 			elif i.key == pygame.K_i:
-				openInv(inv,maps,player, sc)
+				openInv(inv,maps,config.player, sc)
 				searchChests()
 			elif i.key == pygame.K_m:
 				if config.music == True:
@@ -150,13 +149,13 @@ while True:
 	if dead==True: 						#это и то, что закомментировано сверху - это попытки сделать рестарт игры
 		maps = loadMap()				#config.dead - это флаг, по которому в menu.py выбирается задний фон
 		inv = loadInv()
-		player = {'level': 1, 'type': 0, 'i':0, 'j':0, 'hp':6, 'arm':0, 'power':0.5}
+		config.player = {'level': 1, 'type': 0, 'i':0, 'j':0, 'hp':6, 'arm':0, 'power':0.5}
 		mobs.clear()
 		scanMobs(maps)
 		
 		surfSelect.set_alpha(0)
 		renderInv(inv,surfSelect,0,0,sc)
-		refreshPlayer(player)
+		refreshPlayer(config.player)
 		renderHP(sc)					#отдельно вывел функцию в renderGameTest.py для отрисовки сердечек
 		renderMap(maps,sc)
 
@@ -165,7 +164,6 @@ while True:
 		logSystem.blitLog('game',[],sc)
 		dead=False
 		continue
-
 	if redM==False:
 		renderMap(maps,sc)
 	else:

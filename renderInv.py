@@ -135,6 +135,7 @@ def openInv(inv,maps,player,sc):
 						if player['hp'] > 6:
 							player['hp'] = 6
 						inv[a][b] = '1'
+						renderHP(sc)
 					#Замена экипировки
 					elif inv[a][b] == 'd':
 						inv[a][b] = inv[1][1]

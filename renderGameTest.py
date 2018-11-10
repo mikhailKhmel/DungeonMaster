@@ -1,6 +1,8 @@
 import pygame
 import random
 from config import *
+import config
+import mob 
 
 STEP = 64
 
@@ -63,6 +65,7 @@ def blitImg(tpe,dark,dx,dy):
 			surfGameLight.blit(img,img_rect)
 
 def loadMap():
+	config.mobs.clear()
 	print('level=',player['level'])
 	path = 'maps/map' + str(player['level']) + '.txt'
 	f = open(path, 'r')
@@ -75,7 +78,7 @@ def loadMap():
 			tmp = []
 		else:
 			tmp.append(s[x])
-	
+	mob.scanMobs(m)
 	return m
 
 
@@ -185,19 +188,19 @@ def renderMap(maps,sc):
 
 def renderHP(sc):
 	hp=[]
-	if player['hp'] == 6: 
+	if config.player['hp'] == 6: 
 		hp=[2,2,2]
-	elif player['hp'] == 5: 
+	elif config.player['hp'] == 5: 
 		hp=[2,2,1]
-	elif player['hp'] == 4: 
+	elif config.player['hp'] == 4: 
 		hp=[2,2,0]
-	elif player['hp'] == 3: 
+	elif config.player['hp'] == 3: 
 		hp=[2,1,0]
-	elif player['hp'] == 2:
+	elif config.player['hp'] == 2:
 		hp=[2,0,0]
-	elif player['hp'] == 1: 
+	elif config.player['hp'] == 1: 
 		hp=[1,0,0]
-	elif player['hp'] == 0: 
+	elif config.player['hp'] == 0: 
 		hp=[0,0,0]
 	#print('hp=',hp)
 	x=0
