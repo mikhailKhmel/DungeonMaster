@@ -18,6 +18,7 @@ INV_WEIGHT = GAME_WEIGHT
 surfInv = pygame.Surface((INV_HEIGHT,INV_WEIGHT))
 surfSelect = pygame.Surface((STEP,STEP))
 surfInvlog = pygame.Surface((3*STEP, 3*STEP))
+surfInvitm = pygame.Surface((5*STEP, 3*STEP))
 
 glotok = pygame.mixer.Sound('music/glotok.ogg')
 brosok = pygame.mixer.Sound('music/brosok.ogg')
@@ -33,10 +34,6 @@ def loadInv():
 			tmp = []
 		else:
 			tmp.append(s[x])
-	if player['type'] == 1:
-		m[1][1] = 'd'
-	elif player['type'] == 2:
-		m[1][1] = 'e'
 #	print(m)
 	return m
 
@@ -46,74 +43,76 @@ def renderInv(inv,surfSelect,a,b,sc):
 	for i in range(0,len(inv)):
 		for j in range(0,len(inv[i])):
 			if inv[i][j]=='0':
-				img = pygame.image.load('srcBMP/inv/invbg.bmp')
-				img_rect = img.get_rect(topleft=(x,y))
-				surfInv.blit(img,img_rect)
-				x+=STEP
-			elif inv[i][j]=='1':
 				img = pygame.image.load('srcBMP/inv/invempty.bmp')
 				img_rect = img.get_rect(topleft=(x,y))
-				surfInv.blit(img,img_rect)
+				surfInvitm.blit(img,img_rect)
 				x+=STEP
-#			elif inv[i][j]=='2':
-#				img = pygame.image.load('srcBMP/inv/statbg.bmp')
-#				img_rect = img.get_rect(topleft=(x,y))
-#				surfInv.blit(img,img_rect)
-#				x+=STEP
 			elif inv[i][j]=='a':
 				img = pygame.image.load('srcBMP/inv/invpotion.bmp')
 				img_rect = img.get_rect(topleft=(x,y))
-				surfInv.blit(img,img_rect)
+				surfInvitm.blit(img,img_rect)
 				x+=STEP
 			elif inv[i][j]=='d':
 				img = pygame.image.load('srcBMP/inv/invsword.bmp')
 				img_rect = img.get_rect(topleft=(x,y))
-				surfInv.blit(img,img_rect)
+				surfInvitm.blit(img,img_rect)
 				x+=STEP
 			elif inv[i][j]=='e':
 				img = pygame.image.load('srcBMP/inv/invspear.bmp')
 				img_rect = img.get_rect(topleft=(x,y))
-				surfInv.blit(img,img_rect)
+				surfInvitm.blit(img,img_rect)
 				x+=STEP
-#			elif inv[i][j]=='h':
-#				img = pygame.image.load('srcBMP/inv/invarmour0.bmp')
-#				img_rect = img.get_rect(topleft=(x,y))
-#				surfInv.blit(img,img_rect)
-#				x+=STEP
 			elif inv[i][j]=='i':
 				img = pygame.image.load('srcBMP/inv/invarmour1.bmp')
 				img_rect = img.get_rect(topleft=(x,y))
-				surfInv.blit(img,img_rect)
+				surfInvitm.blit(img,img_rect)
 				x+=STEP
 			elif inv[i][j]=='j':
 				img = pygame.image.load('srcBMP/inv/invarmour2.bmp')
 				img_rect = img.get_rect(topleft=(x,y))
-				surfInv.blit(img,img_rect)
+				surfInvitm.blit(img,img_rect)
 				x+=STEP
 		x = 0
 		y += STEP
-	img = pygame.image.load('srcBMP/inv/invsel.bmp')
-	img_rect = img.get_rect(topleft=(a*STEP,b*STEP))
-	surfSelect.blit(img,img_rect)
-	surfInv.blit(surfSelect,(b*STEP,a*STEP))
-#	img = pygame.image.load('srcBMP/inv/statbg.bmp')
-#	img_rect = img.get_rect(topleft=(a*3*STEP,b*3*STEP))
-#	surfInvlog.blit(img,img_rect)
-	surfInvlog.fill((78,78,78))
+	surfSelect.fill((255, 0, 0))
+	surfInvitm.blit(surfSelect,(b*STEP,a*STEP))
+	surfInvlog.fill((78, 78, 78))
 	x = 5
-	invlogmsg = ['Уровень брони: '+str(config.player['arm']), 'Сила: '+str(config.player['power']),'Здесь могла бы', 'быть ваша', 'реклама']
+	invlogmsg = ['Уровень брони: '+str(config.player['arm']), 'Сила: '+str(config.player['power'])]
 	for s in invlogmsg:
 		font = pygame.font.SysFont('verdana',20)
 		text = font.render(s, 1, (255,255,255))
 		surfInvlog.blit(text,(5,x))
 		x+=20
+	img = pygame.image.load('srcBMP/inv/invbg.bmp')
+	img_rect = img.get_rect(topleft=(0,0))
+	surfInv.blit(img,img_rect)
 	surfInv.blit(surfInvlog, (3*STEP, STEP))
+	surfInv.blit(surfInvitm, (1*STEP, 5*STEP))
+	if config.player['type'] == 0:
+		img = pygame.image.load('srcBMP/inv/invempty.bmp')
+		surfInv.blit(img, (STEP, STEP))
+	elif config.player['type'] == 1:
+		img = pygame.image.load('srcBMP/inv/invsword.bmp')
+		surfInv.blit(img, (STEP, STEP))
+	elif config.player['type'] == 2:
+		img = pygame.image.load('srcBMP/inv/invspear.bmp')
+		surfInv.blit(img, (STEP, STEP))
+	if config.player['arm'] == 0:
+		img = pygame.image.load('srcBMP/inv/invempty.bmp')
+		surfInv.blit(img, (STEP, 3*STEP))
+	elif config.player['arm'] == 1:
+		img = pygame.image.load('srcBMP/inv/invarmour1.bmp')
+		surfInv.blit(img, (STEP, 3*STEP))
+	elif config.player['arm'] == 2:
+		img = pygame.image.load('srcBMP/inv/invarmour2.bmp')
+		surfInv.blit(img, (STEP, 3*STEP))
 	sc.blit(surfInv,(GAME_HEIGHT,0))
 
 def openInv(inv,maps,player,sc):
 	logSystem.blitLog('inv',[],sc)
-	a = 5
-	b = 1
+	a = 0
+	b = 0
 	surfSelect.set_alpha(127)
 	renderInv(inv,surfSelect,a,b,sc)
 	while True:
@@ -134,66 +133,86 @@ def openInv(inv,maps,player,sc):
 						player['hp'] +=2
 						if player['hp'] > 6:
 							player['hp'] = 6
-						inv[a][b] = '1'
+						inv[a][b] = '0'
 					#Замена экипировки
 					elif inv[a][b] == 'd':
-						inv[a][b] = inv[1][1]
-						inv[1][1] = 'd'
+						if player['type'] == 0:
+							inv[a][b] = '0'
+						elif player['type'] == 1:
+							inv[a][b] = 'd'
+						elif player['type'] == 2:
+							inv[a][b] = 'e'
 						player['type'] = 1
 						player['power'] = 2
 						refreshPlayer(player)
 					elif inv[a][b] == 'e':
-						inv[a][b] = inv[1][1]
-						inv[1][1] = 'e'
+						if player['type'] == 0:
+							inv[a][b] = '0'
+						elif player['type'] == 1:
+							inv[a][b] = 'd'
+						elif player['type'] == 2:
+							inv[a][b] = 'e'
 						player['type'] = 2
 						player['power'] = 1
 						refreshPlayer(player)
 					#Замена брони
 					elif inv[a][b] == 'i':
 						if player['arm'] < 1:
-							inv[a][b] = inv[3][1]
-							inv[3][1] = 'i'
+							if player['arm'] == 0:
+								inv[a][b] = '0'
+							elif player['arm'] == 1:
+								inv[a][b] = 'i'
+							elif player['arm'] == 2:
+								inv[a][b] = 'j'
 							player['arm'] = 1
 							refreshPlayer(player)
 						else:
 							logSystem.blitLog('inv',[0],sc)
 					elif inv[a][b] == 'j':
 						if player['arm'] < 2:
-							inv[a][b] = inv[3][1]
-							inv[3][1] = 'j'
+							if player['arm'] == 0:
+								inv[a][b] = '0'
+							elif player['arm'] == 1:
+								inv[a][b] = 'i'
+							elif player['arm'] == 2:
+								inv[a][b] = 'j'
 							player['arm'] = 2
 							refreshPlayer(player)
 				#Деекипировка
 				elif i.key == pygame.K_r:
-					if inv[a][b] == '1':
-						inv[a][b] = inv[1][1]
-						inv[1][1] = '1'
+					if inv[a][b] == '0':
+						if player['type'] == 0:
+							inv[a][b] = '0'
+						elif player['type'] == 1:
+							inv[a][b] = 'd'
+						elif player['type'] == 2:
+							inv[a][b] = 'e'
 						player['type'] = 0
 						player['power'] = 0.5
 						refreshPlayer(player)
 				#Уничтожение вещи
 				elif i.key == pygame.K_q:
-					if inv[a][b] != '1':
+					if inv[a][b] != '0':
 						volume = config.PROCENT / 100
 						brosok.set_volume(volume)
 						openSound(brosok)
-						inv[a][b] = '1'
+						inv[a][b] = '0'
 				elif i.key == pygame.K_UP:
 					a -= 1
-					if a < 5:
-						a = 5
+					if a < 0:
+						a = 0
 				elif i.key == pygame.K_RIGHT:	
 					b += 1
-					if b > 5:
-						b = 5
+					if b > 4:
+						b = 4
 				elif i.key == pygame.K_DOWN:
 					a += 1
-					if a > 7:
-						a = 7
+					if a > 2:
+						a = 2
 				elif i.key == pygame.K_LEFT:
 					b -= 1
-					if b < 1:
-						b = 1
+					if b < 0:
+						b = 0
 				else:
 					print('ERROR KEY')
 		renderInv(inv,surfSelect,a,b,sc)
@@ -210,11 +229,11 @@ def openChest(inv,maps,sc):
 		for i in range(x-1, x+2):
 			for j in range(y-1, y+2):
 				if maps[i][j]=='4':
-					for a in range(5, len(inv)):
+					for a in range(0, len(inv)):
 						for b in range(0, len(inv[a])):
-							if inv[a][b]=='1':
+							if inv[a][b] == '0':
 								addItem(inv,a,b,sc)
-								maps[i][j]='a'
+								maps[i][j] = 'a'
 								return
 					print('You are overencumbered')
 					logSystem.blitLog('game',[1],sc)
