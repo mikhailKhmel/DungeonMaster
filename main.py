@@ -125,27 +125,6 @@ while True:
 			else:
 				print('ERROR KEY')
 
-			# if config.player['hp'] <= 0:
-			# 	config.dead=True
-			# 	openMenu(punkt = 0)
-			# 	config.dead=False
-
-			# 	maps = loadMap()
-			# 	renderMap(maps,sc)
-			# 	config.player = {'level': 1, 'type': 0, 'i':0, 'j':0, 'hp':6, 'arm':0, 'power':0.5}
-			# 	scanMobs(maps)
-
-			# 	inv = loadInv()
-			# 	surfSelect.set_alpha(0)
-			# 	renderInv(inv,surfSelect,0,0,sc)
-
-			# 	sc.fill((0,0,0))
-				
-			# 	redM=False
-
-			# 	logSystem.blitLog('game',[],sc)
-				
-			# 	break
 	if dead==True: 						#это и то, что закомментировано сверху - это попытки сделать рестарт игры
 		maps = loadMap()				#config.dead - это флаг, по которому в menu.py выбирается задний фон
 		inv = loadInv()
@@ -164,6 +143,7 @@ while True:
 		logSystem.blitLog('game',[],sc)
 		dead=False
 		continue
+
 	if redM==False:
 		renderMap(maps,sc)
 	else:
