@@ -5,7 +5,7 @@ music = True
 PROCENT = 10
 amount = 0
 player = {'level': 1, 'type': 0, 'i':0, 'j':0, 'hp':6, 'arm':0, 'power':0.5} #конфигурация игрока
-enemy = {'lvl':1,'i':0, 'j':0, 'hp':2} #конфигурация мобов
+mobs = [] #конфигурации мобов
 dead = False
 
 #словарь текстур

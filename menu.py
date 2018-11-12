@@ -36,6 +36,7 @@ class Menu:
 			image_menu = pygame.image.load('srcBMP/menu/'+str(MENU)+'.bmp')
 		else:
 			image_menu = pygame.image.load('srcBMP/menu/gameover.jpg')
+
 		while done:
 			screen.blit(image_menu,(0,0))
 			mp = pygame.mouse.get_pos()

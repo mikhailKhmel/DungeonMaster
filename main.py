@@ -6,6 +6,7 @@ from renderGameTest import *
 from renderInv import *
 from mob import *
 from config import *
+import config
 from menu import *
 from music import *
 
@@ -35,8 +36,8 @@ pygame.mixer.music.set_volume(volume)
 openMusic(mainMusic)
 
 def searchChests():
-	x = player['i']
-	y = player['j']
+	x = config.player['i']
+	y = config.player['j']
 	if maps[x-1][y]=='4' or maps[x][y-1]=='4' or maps[x][y+1]=='4' or maps[x+1][y] == '4':
 		logSystem.blitLog('game',[0],sc)
 	else:
@@ -48,6 +49,7 @@ menu = openMenu(punkt = 0)
 sc.fill((0,0,0))
 
 maps = loadMap()
+scanMobs(maps) #функция сканирования карты для поисков мобов и установки их первоначальных параметров
 renderMap(maps,sc)
 
 inv = loadInv()
@@ -64,56 +66,45 @@ while True:
     # задержка
 	clock.tick(FPS)
 	redM=False
+	dead=False
     # цикл обработки событий
 	for i in pygame.event.get():
 		if i.type == pygame.QUIT:
 			exit()
 		elif i.type == pygame.KEYDOWN:
 			if config.player['hp'] <= 0:
-				config.dead=True
+				dead=True
 				openMenu(punkt = 0)
-				config.player['level']=1
-				config.player['hp'] = 6
-				sc.fill((0,0,0))
-				maps = loadMap()
-				renderMap(maps,sc)
-				logSystem.blitLog('game',[],sc)
-				config.dead=False
 				break
 			if i.key == pygame.K_UP:
 				tmp = maps
 				maps = renderList(-1,0,level,tmp)
 				tmp = maps
 				maps = mobMovement(tmp)
-				print(player['hp'])
 				searchChests()
 			elif i.key == pygame.K_RIGHT:
 				tmp = maps
 				maps = renderList(0,1,level,tmp)
 				tmp = maps
 				maps = mobMovement(tmp)
-				print(player['hp'])
 				searchChests()
 			elif i.key == pygame.K_DOWN:
 				tmp = maps
 				maps = renderList(1,0,level,tmp)
 				tmp = maps
 				maps = mobMovement(tmp)
-				print(player['hp'])
 				searchChests()
 			elif i.key == pygame.K_LEFT:
 				tmp = maps
 				maps = renderList(0,-1,level,tmp)
 				tmp = maps
 				maps = mobMovement(tmp)
-				print(player['hp'])
 				searchChests()
 			elif i.key == pygame.K_SPACE:
-				redM=True
 				tmp = maps
-				maps = mobKiller(tmp)
+				maps,redM=mobKiller(tmp)
 			elif i.key == pygame.K_i:
-				openInv(inv,maps,player, sc)
+				openInv(inv,maps,config.player, sc)
 				searchChests()
 			elif i.key == pygame.K_m:
 				if config.music == True:
@@ -134,6 +125,25 @@ while True:
 			else:
 				print('ERROR KEY')
 
+	if dead==True: 						#это и то, что закомментировано сверху - это попытки сделать рестарт игры
+		maps = loadMap()				#config.dead - это флаг, по которому в menu.py выбирается задний фон
+		inv = loadInv()
+		config.player = {'level': 1, 'type': 0, 'i':0, 'j':0, 'hp':6, 'arm':0, 'power':0.5}
+		mobs.clear()
+		scanMobs(maps)
+		
+		surfSelect.set_alpha(0)
+		renderInv(inv,surfSelect,0,0,sc)
+		refreshPlayer(config.player)
+		renderHP(sc)					#отдельно вывел функцию в renderGameTest.py для отрисовки сердечек
+		renderMap(maps,sc)
+
+		sc.fill((0,0,0))
+
+		logSystem.blitLog('game',[],sc)
+		dead=False
+		continue
+
 	if redM==False:
 		renderMap(maps,sc)
 	else:
@@ -141,6 +151,6 @@ while True:
 		redMob(redM,tmp,sc)
 
 	renderInv(inv,surfSelect,0,0,sc)
-	
+	renderHP(sc)
 	# обновление экрана
 	pygame.display.update()
