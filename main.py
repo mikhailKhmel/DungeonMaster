@@ -30,7 +30,7 @@ sc = pygame.display.set_mode((WINDOW_HEIGHT, WINDOW_WEIGHT))
 sc.fill((0,0,0))
 
 # Настройка звука
-mainMusic = 'music/main.mp3'
+mainMusic = 'music/main.ogg'
 volume = config.PROCENT / 100
 pygame.mixer.music.set_volume(volume)
 openMusic(mainMusic)
