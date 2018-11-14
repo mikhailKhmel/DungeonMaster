@@ -2,7 +2,7 @@ import random
 
 #здесь хранятся глобальные переменные
 music = True
-PROCENT = 10
+PROCENT = 110
 amount = 0
 player = {'level': 1, 'type': 0, 'i':0, 'j':0, 'hp':6, 'arm':0, 'power':0.5} #конфигурация игрока
 mobs = [] #конфигурации мобов

@@ -11,7 +11,7 @@ from menu import *
 from music import *
 
 # здесь определяются константы, классы и функции
-FPS = 20
+FPS = 10
 STEP = 64
 PROC = 100
 
@@ -80,29 +80,29 @@ while True:
 				tmp = maps
 				maps = renderList(-1,0,level,tmp)
 				tmp = maps
-				maps = mobMovement(tmp)
+				maps = mobMovement(tmp,sc)
 				searchChests()
 			elif i.key == pygame.K_RIGHT:
 				tmp = maps
 				maps = renderList(0,1,level,tmp)
 				tmp = maps
-				maps = mobMovement(tmp)
+				maps = mobMovement(tmp,sc)
 				searchChests()
 			elif i.key == pygame.K_DOWN:
 				tmp = maps
 				maps = renderList(1,0,level,tmp)
 				tmp = maps
-				maps = mobMovement(tmp)
+				maps = mobMovement(tmp,sc)
 				searchChests()
 			elif i.key == pygame.K_LEFT:
 				tmp = maps
 				maps = renderList(0,-1,level,tmp)
 				tmp = maps
-				maps = mobMovement(tmp)
+				maps = mobMovement(tmp,sc)
 				searchChests()
 			elif i.key == pygame.K_SPACE:
 				tmp = maps
-				maps,redM=mobKiller(tmp)
+				maps,redM=mobKiller(tmp,sc)
 			elif i.key == pygame.K_i:
 				openInv(inv,maps,config.player, sc)
 				searchChests()
@@ -148,7 +148,7 @@ while True:
 		renderMap(maps,sc)
 	else:
 		tmp = maps
-		redMob(redM,tmp,sc)
+		redMob(tmp,sc)
 
 	renderInv(inv,surfSelect,0,0,sc)
 	renderHP(sc)

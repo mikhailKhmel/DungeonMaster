@@ -21,7 +21,7 @@ surfGameLight = pygame.Surface((GAME_HEIGHT-4*STEP,GAME_HEIGHT-4*STEP))
 
 surfHp = pygame.Surface((STEP,GAME_WEIGHT))
 surfMob = pygame.Surface((STEP,STEP))
-
+surfPlayer = pygame.Surface((STEP,STEP))
 
 
 def blitImg(tpe,dark,dx,dy):
@@ -236,7 +236,7 @@ def renderList(dx,dy,level,tmp):
 
 	return tmp
 
-def redMob(hit,maps,sc):
+def redMob(maps,sc):
 	x=player['i']
 	y=player['j']
 	surfMob.set_alpha(0)
@@ -258,10 +258,14 @@ def redMob(hit,maps,sc):
 	print('dx=',dx,'\tdy=',dy)
 	if dx==0 and dy==0:
 		return
-	elif hit==True:
+	else:
 		img=pygame.image.load('srcBMP/env/light/redMob.bmp')
 		img_rect=img.get_rect(topleft=(dx,dy))
 		sc.blit(img,img_rect)
-	else:
-		pass
-		#здесь алгоритм прорисовки хп у рядом стоящего моба
+
+def redPlayer(sc):
+	surfPlayer.set_alpha(0)
+	surfPlayer.fill((0,0,0))
+	img=pygame.image.load('srcBMP/env/light/redMob.bmp')
+	img_rect=img.get_rect(topleft=(STEP*4,STEP*4))
+	sc.blit(img,img_rect)

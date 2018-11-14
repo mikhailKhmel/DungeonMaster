@@ -1,6 +1,8 @@
 import pygame 
 import random
 import config
+import renderGameTest
+import logSystem
 from music import *
 
 
@@ -15,7 +17,7 @@ def playerForDamage(tmp,x,y):															#функция проверки и�
 		return False
 		
 
-def mobMovement(tmp):		#логика передвижения моба
+def mobMovement(tmp,sc):		#логика передвижения моба
 	print('count of mobs =',len(config.mobs))
 	for c in range(0,len(config.mobs)): 
 		playerNearby=False 		#флаг нахождения игрока в поле видимости
@@ -25,7 +27,6 @@ def mobMovement(tmp):		#логика передвижения моба
 			for j in range(y-3,y+3):
 				if tmp[i][j]=='2':
 					playerNearby=True 		#игрока в поле видимости
-					#config.player['hp']=config.player['hp']-config.mobs[c]['power']
 		print('playerNearby=',playerNearby)
 
 		if playerNearby==False: 		#если игрока рядом нет, то передвижение хаотичное в зависимости от окружения
@@ -43,10 +44,13 @@ def mobMovement(tmp):		#логика передвижения моба
 				config.mobs[c]['i']=x + dx
 				config.mobs[c]['j']=y + dy
 		else:
+			logSystem.blitLog('game',[7],sc)
 			#алгоритм приближения моба к игроку
 			if playerForDamage(tmp,x,y) == True: #если игрок находится вплотную к мобу, то произвести удар
+				renderGameTest.redPlayer(sc)
 				config.player['hp']=config.player['hp']+config.player['arm']-config.mobs[c]['power']
 			else: 
+				renderGameTest.redPlayer(sc)
 				diffX = config.player['i'] - x #просчитываем разницу координат игрока и моба
 				diffY = config.player['j'] - y #это дает нам понять в какую сторону надо двигаться мобу
 				dx=[]
@@ -97,13 +101,15 @@ def mobMovement(tmp):		#логика передвижения моба
 				x = config.mobs[c]['i']
 				y = config.mobs[c]['j']
 				if playerForDamage(tmp,x,y) == True: #если после передвижения моб оказался рядом с игроков, то производится удар моба
+					renderGameTest.redPlayer(sc)
 					config.player['hp']=config.player['hp']+config.player['arm']-config.mobs[c]['power']
-
+					
+	#renderGameTest.redPlayer(sc)
 	print(config.mobs)
 	return tmp		
 
 
-def mobKiller(tmp): #функция удара игрока
+def mobKiller(tmp,sc): #функция удара игрока
 	volume = config.PROCENT / 100
 	udar.set_volume(volume)
 	smert.set_volume(volume)
@@ -116,6 +122,7 @@ def mobKiller(tmp): #функция удара игрока
 			if x+1==c['i'] and y==c['j']: #если координаты найденного моба рядом с игроком и координаты моба из ЛИСТА совпадают
 				c['hp']=c['hp']-config.player['power'] #то производится удар игрока
 				config.player['hp']=config.player['hp']+config.player['arm']-c['power'] #и удар моба
+				renderGameTest.redPlayer(sc)
 				if c['hp']<=0: #если моб умер
 					config.mobs.remove(c) #удаление его из листа
 					tmp[x+1][y]='0'
@@ -128,6 +135,7 @@ def mobKiller(tmp): #функция удара игрока
 			if x==c['i'] and y+1==c['j']:
 				c['hp']=c['hp']-config.player['power']
 				config.player['hp']=config.player['hp']+config.player['arm']-c['power']
+				renderGameTest.redPlayer(sc)
 				if c['hp']<=0:
 					config.mobs.remove(c)
 					tmp[x][y+1]='0'
@@ -140,6 +148,7 @@ def mobKiller(tmp): #функция удара игрока
 			if x-1==c['i'] and y==c['j']:
 				c['hp']=c['hp']-config.player['power']
 				config.player['hp']=config.player['hp']+config.player['arm']-c['power']
+				renderGameTest.redPlayer(sc)
 				if c['hp']<=0:
 					config.mobs.remove(c)
 					tmp[x-1][y]='0'
@@ -152,6 +161,7 @@ def mobKiller(tmp): #функция удара игрока
 			if x==c['i'] and y-1==c['j']:
 				c['hp']=c['hp']-config.player['power']
 				config.player['hp']=config.player['hp']+config.player['arm']-c['power']
+				renderGameTest.redPlayer(sc)
 				if c['hp']<=0:
 					config.mobs.remove(c)
 					tmp[x][y-1]='0'
