@@ -1,6 +1,5 @@
 import pygame
 import random
-from config import *
 import config
 import mob 
 
@@ -27,47 +26,47 @@ surfPlayer = pygame.Surface((STEP,STEP))
 def blitImg(tpe,dark,dx,dy):
 	if dark==True:
 		if tpe=='1':
-			img=pygame.image.load(dictEnv[1]+'/dark/tipo_stena.bmp')
+			img=pygame.image.load(config.dictEnv[1]+'/dark/tipo_stena.bmp')
 			img_rect=img.get_rect(topleft=(dx,dy))
 			surfGameLight.blit(img,img_rect)
 		else:
-			img=pygame.image.load(dictEnv[0]+'/dark/plitka1.bmp')
+			img=pygame.image.load(config.dictEnv[0]+'/dark/plitka1.bmp')
 			img_rect=img.get_rect(topleft=(dx,dy))
 			surfGameLight.blit(img,img_rect)
 	else:
 		if tpe=='0':
-			img=pygame.image.load(dictEnv[0]+'/light/plitka1.bmp')
+			img=pygame.image.load(config.dictEnv[0]+'/light/plitka1.bmp')
 			img_rect=img.get_rect(topleft=(dx,dy))
 			surfGameLight.blit(img,img_rect)
 		elif tpe=='1':
-			img=pygame.image.load(dictEnv[1]+'/light/tipo_stena.bmp')
+			img=pygame.image.load(config.dictEnv[1]+'/light/tipo_stena.bmp')
 			img_rect=img.get_rect(topleft=(dx,dy))
 			surfGameLight.blit(img,img_rect)
 		elif tpe=='2':
-			img=pygame.image.load(dictEnv[2])
+			img=pygame.image.load(config.dictEnv[2])
 			img_rect=img.get_rect(topleft=(dx,dy))
 			surfGameLight.blit(img,img_rect)
 		elif tpe=='3':
-			img=pygame.image.load(dictEnv[3])
+			img=pygame.image.load(config.dictEnv[3])
 			img_rect=img.get_rect(topleft=(dx,dy))
 			surfGameLight.blit(img,img_rect)
 		elif tpe=='4':
-			img=pygame.image.load(dictEnv[4])
+			img=pygame.image.load(config.dictEnv[4])
 			img_rect=img.get_rect(topleft=(dx,dy))
 			surfGameLight.blit(img,img_rect)
 		elif tpe=='5':
-			img=pygame.image.load(dictEnv[5])
+			img=pygame.image.load(config.dictEnv[5])
 			img_rect=img.get_rect(topleft=(dx,dy))
 			surfGameLight.blit(img,img_rect)
 		elif tpe=='a':
-			img=pygame.image.load(dictEnv[10])
+			img=pygame.image.load(config.dictEnv[10])
 			img_rect=img.get_rect(topleft=(dx,dy))
 			surfGameLight.blit(img,img_rect)
 
 def loadMap():
 	config.mobs.clear()
-	print('level=',player['level'])
-	path = 'maps/map' + str(player['level']) + '.txt'
+	print('level=',config.player['level'])
+	path = 'maps/map' + str(config.player['level']) + '.txt'
 	f = open(path, 'r')
 	s = f.read()
 	m = []
@@ -78,7 +77,6 @@ def loadMap():
 			tmp = []
 		else:
 			tmp.append(s[x])
-	mob.scanMobs(m)
 	return m
 
 
@@ -87,12 +85,12 @@ def renderMap(maps,sc):
 	for i in range(0,len(maps)):
 		for j in range(0,len(maps[i])):
 			if maps[i][j] == '2':
-				player['i'] = i
-				player['j'] = j
+				config.player['i'] = i
+				config.player['j'] = j
 
 
-	startIdark = player['i'] - 4
-	startJdark = player['j'] - 4
+	startIdark = config.player['i'] - 4
+	startJdark = config.player['j'] - 4
 	endIdark = startIdark + 10
 	endJdark = startJdark + 10
 
@@ -101,11 +99,11 @@ def renderMap(maps,sc):
 	for i in range(startIdark,endIdark):
 		for j in range(startJdark,endJdark):
 			if maps[i][j]=='0':
-				img=pygame.image.load(dictEnv[0]+'/dark/plitka1.bmp')
+				img=pygame.image.load(config.dictEnv[0]+'/dark/plitka1.bmp')
 				img_rect=img.get_rect(topleft=(x,y))
 				surfGameDark.blit(img,img_rect)
 			elif maps[i][j]=='1':
-				img=pygame.image.load(dictEnv[1]+'/dark/tipo_stena.bmp')
+				img=pygame.image.load(config.dictEnv[1]+'/dark/tipo_stena.bmp')
 				img_rect=img.get_rect(topleft=(x,y))
 				surfGameDark.blit(img,img_rect)
 			x+=STEP
@@ -113,8 +111,8 @@ def renderMap(maps,sc):
 		y+=STEP
 	sc.blit(surfGameDark,(0,0))
 
-	startIlight = player['i'] - 2
-	startJlight = player['j'] - 2
+	startIlight = config.player['i'] - 2
+	startJlight = config.player['j'] - 2
 	endIlight = startIlight + 5
 	endJlight = startJlight + 5
 
@@ -226,19 +224,19 @@ def renderList(dx,dy,level,tmp):
 	if tmp[x+dx][y+dy] == '1' or tmp[x+dx][y+dy] == '4' or tmp[x+dx][y+dy] == 'a' or tmp[x+dx][y+dy] == '5':
 		pass
 	elif tmp[x+dx][y+dy] == '3':
-		player['level']+=1
+		config.player['level']+=1
 		tmp=loadMap()
 	else:
 		tmp[x][y]='0'
 		tmp[x+dx][y+dy]='2'
-		player['i'] = x+dx
-		player['j'] = y+dy
+		config.player['i'] = x+dx
+		config.player['j'] = y+dy
 
 	return tmp
 
 def redMob(maps,sc):
-	x=player['i']
-	y=player['j']
+	x=config.player['i']
+	y=config.player['j']
 	surfMob.set_alpha(0)
 	surfMob.fill((0,0,0))
 	dx=0

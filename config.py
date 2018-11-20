@@ -5,6 +5,8 @@ music = True
 PROCENT = 110
 amount = 0
 player = {'level': 1, 'type': 0, 'i':0, 'j':0, 'hp':6, 'arm':0, 'power':0.5} #конфигурация игрока
+inv = []
+maps = []
 mobs = [] #конфигурации мобов
 dead = False
 
