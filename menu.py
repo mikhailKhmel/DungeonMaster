@@ -1,8 +1,9 @@
 import pygame
 import sys
 import random
-from music import *
 import config
+from music import *
+
 
 MENU = random.randint(1,5)
 window = pygame.display.set_mode((1024, 800))
@@ -37,6 +38,7 @@ class Menu:
 		else:
 			image_menu = pygame.image.load('srcBMP/menu/gameover.jpg')
 
+
 		while done:
 			screen.blit(image_menu,(0,0))
 			mp = pygame.mouse.get_pos()
@@ -48,6 +50,13 @@ class Menu:
 				if e.type == pygame.QUIT:
 					sys.exit()
 				if e.type == pygame.KEYDOWN:
+					if e.key == pygame.K_m:
+						if config.music == True:
+							pygame.mixer.music.pause()
+							config.music = False
+						elif config.music == False:
+							pygame.mixer.music.unpause()
+							config.music = True
 					if e.key == pygame.K_ESCAPE:
 					 sys.exit()
 					if e.key == pygame.K_UP:

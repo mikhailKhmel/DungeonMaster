@@ -4,7 +4,7 @@ import random
 from music import *
 import config
 
-MENU = random.randint(1,4)
+MENU = random.randint(1,5)
 window = pygame.display.set_mode((1024, 800))
 pygame.display.set_caption('DungeonMaster')
 screen = pygame.Surface((1024, 800))
@@ -12,9 +12,10 @@ image_menu = ''
 
 
 def openEmenu(punkt):
-	punkts = [(10, 630, u'Continue', (255, 255, 255), (250,250,30), 0),
-			  (10, 680, u'Sound ' + str(config.PROCENT) +'%', (255, 255, 255), (250, 250, 30), 1),
-			  (10, 730, u'Exit', (255, 255, 255), (250,250,30), 2)]
+	punkts = [(10, 580, u'Continue', (255, 255, 255), (250,250,30), 0),
+			  (10, 630, u'Restart', (255, 255, 255), (250,250,30), 1),
+			  (10, 680, u'Sound ' + str(config.PROCENT) +'%', (255, 255, 255), (250, 250, 30), 2),
+			  (10, 730, u'Exit', (255, 255, 255), (250,250,30), 3)]
 	game = Menu(punkts)
 	game.menu(punkt)
 
@@ -32,10 +33,7 @@ class Menu:
 		font_menu = pygame.font.SysFont("arial", 50)
 		pygame.key.set_repeat(0,0)
 		pygame.mouse.set_visible(True)
-		if config.dead == False:
-			image_menu = pygame.image.load('srcBMP/menu/'+str(MENU)+'.bmp')
-		else:
-			image_menu = pygame.image.load('srcBMP/menu/gameover.jpg')
+		image_menu = pygame.image.load('srcBMP/menu/'+str(MENU)+'.bmp')
 
 		while done:
 			screen.blit(image_menu,(0,0))
@@ -59,7 +57,10 @@ class Menu:
 					if e.key == pygame.K_RETURN:
 						if punkt == 0:
 							done = False
-						elif punkt == 2:
+						elif punkt == 1:
+							done = False
+							config.dead = True
+						elif punkt == 3:
 								exit()
 					if e.key == pygame.K_LEFT:
 						if punkt == 1:

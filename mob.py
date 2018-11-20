@@ -10,7 +10,7 @@ udar = pygame.mixer.Sound('music/udar.ogg')
 smert = pygame.mixer.Sound('music/smert.ogg')
 
 
-def playerForDamage(tmp,x,y):															#функция проверки игрока рядом с мобом
+def playerForDamage(tmp,x,y):							#функция проверки игрока рядом с мобом
 	if tmp[x+1][y]=='2' or tmp[x][y+1]=='2' or tmp[x-1][y]=='2' or tmp[x][y-1]=='2':
 		return True
 	else:
@@ -26,7 +26,7 @@ def mobMovement(tmp,sc):		#логика передвижения моба
 		for i in range(x-3,x+3):
 			for j in range(y-3,y+3):
 				if tmp[i][j]=='2':
-					playerNearby=True 		#игрока в поле видимости
+					playerNearby=True 		#игрок в поле видимости
 		print('playerNearby=',playerNearby)
 
 		if playerNearby==False: 		#если игрока рядом нет, то передвижение хаотичное в зависимости от окружения
@@ -47,9 +47,11 @@ def mobMovement(tmp,sc):		#логика передвижения моба
 			logSystem.blitLog('game',[7],sc)
 			#алгоритм приближения моба к игроку
 			if playerForDamage(tmp,x,y) == True: #если игрок находится вплотную к мобу, то произвести удар
+				print('игрок рядом')
 				renderGameTest.redPlayer(sc)
 				config.player['hp']=config.player['hp']+config.player['arm']-config.mobs[c]['power']
 			else: 
+				print('приближаемся с игроку')
 				renderGameTest.redPlayer(sc)
 				diffX = config.player['i'] - x #просчитываем разницу координат игрока и моба
 				diffY = config.player['j'] - y #это дает нам понять в какую сторону надо двигаться мобу
@@ -78,7 +80,7 @@ def mobMovement(tmp,sc):		#логика передвижения моба
 					dy=[0,0]
 				else:
 					pass
-
+				print('вектор\t',dx,'\t',dy)
 				flag=False
 				newX=0
 				newY=0
@@ -101,6 +103,7 @@ def mobMovement(tmp,sc):		#логика передвижения моба
 				x = config.mobs[c]['i']
 				y = config.mobs[c]['j']
 				if playerForDamage(tmp,x,y) == True: #если после передвижения моб оказался рядом с игроков, то производится удар моба
+					print('игрок снова рядом')
 					renderGameTest.redPlayer(sc)
 					config.player['hp']=config.player['hp']+config.player['arm']-config.mobs[c]['power']
 					
@@ -109,79 +112,88 @@ def mobMovement(tmp,sc):		#логика передвижения моба
 	return tmp		
 
 
-def mobKiller(tmp,sc): #функция удара игрока
+def mobKiller(sc): #функция удара игрока
 	volume = config.PROCENT / 100
 	udar.set_volume(volume)
 	smert.set_volume(volume)
 
 	x=config.player['i'] #координаты игрока
 	y=config.player['j']
-
-	if tmp[x+1][y]=='5': #поиск моба рядом с игроков
+	print('в функции')
+	if config.maps[x+1][y]=='5': #поиск моба рядом с игроком
+		print('удар моба снизу')
 		for c in config.mobs:
 			if x+1==c['i'] and y==c['j']: #если координаты найденного моба рядом с игроком и координаты моба из ЛИСТА совпадают
+				print('моб найден, id=',c['id'])
 				c['hp']=c['hp']-config.player['power'] #то производится удар игрока
 				config.player['hp']=config.player['hp']+config.player['arm']-c['power'] #и удар моба
 				renderGameTest.redPlayer(sc)
 				if c['hp']<=0: #если моб умер
 					config.mobs.remove(c) #удаление его из листа
-					tmp[x+1][y]='0'
+					config.maps[x+1][y]='0'
 					openSound(smert)
 				else:
 					openSound(udar)
-				return tmp,True #возвращаем в main обновление карты и анимацию удара
-	elif tmp[x][y+1]=='5':
+				return True #возвращаем в main обновление карты и анимацию удара
+	elif config.maps[x][y+1]=='5':
+		print('удар моба справа')
 		for c in config.mobs:
 			if x==c['i'] and y+1==c['j']:
+				print('моб найден, id=',c['id'])
 				c['hp']=c['hp']-config.player['power']
 				config.player['hp']=config.player['hp']+config.player['arm']-c['power']
 				renderGameTest.redPlayer(sc)
 				if c['hp']<=0:
 					config.mobs.remove(c)
-					tmp[x][y+1]='0'
+					config.maps[x][y+1]='0'
 					openSound(smert)
 				else:
 					openSound(udar)
-				return tmp,True
-	elif tmp[x-1][y]=='5':
+				return True
+	elif config.maps[x-1][y]=='5':
+		print('удар моба сверху')
 		for c in config.mobs:
 			if x-1==c['i'] and y==c['j']:
+				print('моб найден, id=',c['id'])
 				c['hp']=c['hp']-config.player['power']
 				config.player['hp']=config.player['hp']+config.player['arm']-c['power']
 				renderGameTest.redPlayer(sc)
 				if c['hp']<=0:
 					config.mobs.remove(c)
-					tmp[x-1][y]='0'
+					config.maps[x-1][y]='0'
 					openSound(smert)
 				else:
 					openSound(udar)
-				return tmp,True
-	elif tmp[x][y-1]=='5':
+				return True
+	elif config.maps[x][y-1]=='5':
+		print('удар моба слева')
 		for c in config.mobs:
 			if x==c['i'] and y-1==c['j']:
+				print('моб найден, id=',c['id'])
 				c['hp']=c['hp']-config.player['power']
 				config.player['hp']=config.player['hp']+config.player['arm']-c['power']
 				renderGameTest.redPlayer(sc)
 				if c['hp']<=0:
 					config.mobs.remove(c)
-					tmp[x][y-1]='0'
+					config.maps[x][y-1]='0'
 					openSound(smert)
 				else:
 					openSound(udar)
-				return tmp,True
+				return True
 	else:
-		return tmp,False #если моба рядом нет, передаем ту же карту и отсутствие анимации удара
+		print('моба рядом нет')
+		return False #если моба рядом нет, передаем ту же карту и отсутствие анимации удара
 
 
-def scanMobs(maps): #функция сканирования карты для поиска мобов
+def scanMobs(): #функция сканирования карты для поиска мобов
 	c=0
-	for i in range(0,len(maps)):
-		for j in range(0,len(maps[i])):
-			if maps[i][j]=='5':
+	tmp=[]
+	for i in range(0,len(config.maps)):
+		for j in range(0,len(config.maps[i])):
+			if config.maps[i][j]=='5':
 				hp = random.randint(4,6) #хп от 4 до 6
-				power = random.randint(1,4) #удар от 1 до 4
+				power = random.randint(1,3) #удар от 1 до 4
 				mob = {'id':c,'hp':hp,'power':power,'i':i,'j':j}
-				config.mobs.append(mob) #добавления словаря нового моба в лист
+				tmp.append(mob) #добавления словаря нового моба в лист
 				c+=1
-
-	print(config.mobs)
+	return tmp
