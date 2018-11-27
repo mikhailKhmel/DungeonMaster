@@ -7,7 +7,7 @@ from renderInv import *
 from mob import *
 import config
 import menu
-import emenu
+import pause
 from music import *
 
 # здесь определяются константы, классы и функции
@@ -122,7 +122,7 @@ while True:
 					pygame.mixer.music.unpause()
 					config.music = True
 			elif i.key == pygame.K_ESCAPE:
-				emenu.openEmenu(punkt = 0)
+				pause.openPause(punkt = 0)
 				if config.dead==True:
 					resetGame(sc)
 				else:
