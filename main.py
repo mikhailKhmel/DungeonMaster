@@ -140,6 +140,9 @@ while True:
 				config.dead=True
 				resetGame(sc)
 				menu.openMenu(punkt = 0)
+				sc.fill((0,0,0))
+				logSystem.blitLog('game',[],sc)
+
 	
 	if redM==False:
 		renderMap(config.maps,sc)
