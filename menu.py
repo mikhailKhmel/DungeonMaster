@@ -5,7 +5,6 @@ import config
 from music import *
 
 
-MENU = random.randint(1,5)
 window = pygame.display.set_mode((1024, 800))
 pygame.display.set_caption('DungeonMaster')
 screen = pygame.Surface((1024, 800))
@@ -34,7 +33,7 @@ class Menu:
 		pygame.key.set_repeat(0,0)
 		#pygame.mouse.set_visible(True)
 		if config.dead == False:
-			image_menu = pygame.image.load('srcBMP/menu/'+str(MENU)+'.bmp')
+			image_menu = pygame.image.load('srcBMP/menu/'+str(config.MENU)+'.bmp')
 		else:
 			image_menu = pygame.image.load('srcBMP/menu/gameover.jpg')
 
