@@ -4,14 +4,13 @@ import random
 from music import *
 import config
 
-MENU = random.randint(1,5)
 window = pygame.display.set_mode((1024, 800))
 pygame.display.set_caption('DungeonMaster')
 screen = pygame.Surface((1024, 800))
 image_menu = ''
 
 
-def openEmenu(punkt):
+def openPause(punkt):
 	punkts = [(10, 580, u'Continue', (255, 255, 255), (250,250,30), 0),
 			  (10, 630, u'Restart', (255, 255, 255), (250,250,30), 1),
 			  (10, 680, u'Sound ' + str(config.PROCENT) +'%', (255, 255, 255), (250, 250, 30), 2),
@@ -33,7 +32,7 @@ class Menu:
 		font_menu = pygame.font.SysFont("arial", 50)
 		pygame.key.set_repeat(0,0)
 		pygame.mouse.set_visible(True)
-		image_menu = pygame.image.load('srcBMP/menu/'+str(MENU)+'.bmp')
+		image_menu = pygame.image.load('srcBMP/menu/'+str(config.MENU)+'.bmp')
 
 		while done:
 			screen.blit(image_menu,(0,0))
@@ -63,20 +62,20 @@ class Menu:
 						elif punkt == 3:
 								exit()
 					if e.key == pygame.K_LEFT:
-						if punkt == 1:
+						if punkt == 2:
 							if config.PROCENT > 0:
 								config.PROCENT -=5
 								volume = config.PROCENT / 100
 								pygame.mixer.music.set_volume(volume)
-								openEmenu(punkt)
+								openPause(punkt)
 								done = False
 					if e.key == pygame.K_RIGHT:
-						if punkt == 1:
+						if punkt == 2:
 							if config.PROCENT < 100:
 								config.PROCENT +=5
 								volume = config.PROCENT / 100
 								pygame.mixer.music.set_volume(volume)
-								openEmenu(punkt)
+								openPause(punkt)
 								done = False
 			window.blit(screen, (0, 0))
 			pygame.display.update()
