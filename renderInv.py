@@ -224,8 +224,8 @@ def refreshPlayer(player):
 	dictEnv[2] = 'srcBMP/player/player'+str(player['arm'])+str(player['type'])+'.bmp'
 	
 def openChest(maps,sc):
-	x = player['i']
-	y = player['j']
+	x = config.player['i']
+	y = config.player['j']
 	if maps[x-1][y]=='4' or maps[x][y-1]=='4' or maps[x][y+1]=='4' or maps[x+1][y] == '4':
 		for i in range(x-1, x+2):
 			for j in range(y-1, y+2):
