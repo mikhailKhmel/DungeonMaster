@@ -35,7 +35,7 @@ class Menu:
 		if config.dead == False:
 			image_menu = pygame.image.load('srcBMP/menu/'+str(config.MENU)+'.bmp')
 		else:
-			image_menu = pygame.image.load('srcBMP/menu/gameover.jpg')
+			image_menu = pygame.image.load('srcBMP/menu/gameover.bmp')
 
 
 		while done:
