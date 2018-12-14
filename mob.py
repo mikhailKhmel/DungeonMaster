@@ -9,6 +9,7 @@ from music import *
 udar = pygame.mixer.Sound('music/udar.ogg')
 smert = pygame.mixer.Sound('music/smert.ogg')
 
+
 def playerForDamage(tmp,x,y):							#функция проверки игрока рядом с мобом
 	if tmp[x+1][y]=='2' or tmp[x][y+1]=='2' or tmp[x-1][y]=='2' or tmp[x][y-1]=='2':
 		return True
@@ -185,17 +186,13 @@ def mobKiller(sc): #функция удара игрока
 
 
 def scanMobs(): #функция сканирования карты для поиска мобов
-	lowHp=config.player['level']*2
-	highHp=config.player['level']*4
-	lowPower=config.player['level']
-	highPower=config.player['level']*3
 	c=0
 	tmp=[]
 	for i in range(0,len(config.maps)):
 		for j in range(0,len(config.maps[i])):
 			if config.maps[i][j]=='5':
-				hp = random.randint(lowHp,highHp) #хп от 4 до 6
-				power = random.randint(lowPower,highPower) #удар от 1 до 4
+				hp = random.randint(4,6) #хп от 4 до 6
+				power = random.randint(1,3) #удар от 1 до 4
 				mob = {'id':c,'hp':hp,'power':power,'i':i,'j':j}
 				tmp.append(mob) #добавления словаря нового моба в лист
 				c+=1

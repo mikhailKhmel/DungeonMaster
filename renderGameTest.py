@@ -1,8 +1,7 @@
 import pygame
 import random
 import config
-import mob
-import os
+import mob 
 
 STEP = 64
 
@@ -67,7 +66,7 @@ def blitImg(tpe,dark,dx,dy):
 def loadMap():
 	config.mobs.clear()
 	print('level=',config.player['level'])
-	path = 'maps/' + str(random.randint(1,len(os.listdir('maps/')))) + '.txt'
+	path = 'maps/map' + str(config.player['level']) + '.txt'
 	f = open(path, 'r')
 	s = f.read()
 	m = []
