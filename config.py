@@ -1,7 +1,7 @@
 import random
 
 #здесь хранятся глобальные переменные
-MENU = random.randint(1,5)
+MENU = random.randint(1,4)
 music = True
 PROCENT = 110
 amount = 0
